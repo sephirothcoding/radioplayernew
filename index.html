@@ -62,6 +62,35 @@
       fill:#ff0000;
     }
     .ctrl-btn.muted svg { fill:#f55; }
+
+    .social-buttons {
+      position: absolute;
+      bottom: 10px;
+      right: 10px;
+      display: flex;
+      gap: 10px;
+    }
+
+    .social-buttons a {
+      width: 30px;
+      height: 30px;
+      display: inline-flex;
+      justify-content: center;
+      align-items: center;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.8);
+      color: #000;
+      text-decoration: none;
+      font-size: 16px;
+      transition: transform 0.2s, background 0.2s;
+    }
+
+    .social-buttons a:hover {
+      transform: scale(1.2);
+      background: #ff0000;
+      color: #fff;
+    }
+
     @media(max-width:500px) {
       .ctrl-btn { width:10vw; height:10vw; }
       .now-playing { font-size:1rem; }
@@ -107,6 +136,13 @@
           </svg>
         </button>
       </div>
+
+      <div class="social-buttons">
+        <a href="https://youtube.com" target="_blank" title="YouTube">🎥</a>
+        <a href="https://facebook.com" target="_blank" title="Facebook">📘</a>
+        <a href="https://instagram.com" target="_blank" title="Instagram">📷</a>
+      </div>
+
     </div>
   </div>
 
