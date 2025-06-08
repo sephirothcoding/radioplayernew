@@ -16,7 +16,7 @@
     .container {
       width: 1066px;
       height: 649px;
-      background: url("Screenshot_16.jpg") no-repeat center center;
+      background: url("https://xatimg.com/image/aGBLR1MOWcPH.jpg") no-repeat center center;
       background-size: cover;
       position: relative;
       border-radius: 10px;
@@ -50,21 +50,21 @@
       position: absolute;
     }
 
-    #btn-play      { bottom: 100px; left: 300px; }
-    #btn-pause     { bottom: 100px; left: 360px; }
-    #btn-stop      { bottom: 100px; left: 420px; }
-    #btn-mute      { bottom: 100px; left: 480px; }
-    #btn-vol-down  { bottom: 100px; left: 540px; }
-    #btn-vol-up    { bottom: 100px; left: 600px; }
+    #btn-play      { bottom: 80px; left: 300px; }
+    #btn-pause     { bottom: 80px; left: 360px; }
+    #btn-stop      { bottom: 80px; left: 420px; }
+    #btn-mute      { bottom: 80px; left: 480px; }
+    #btn-vol-down  { bottom: 80px; left: 540px; }
+    #btn-vol-up    { bottom: 80px; left: 600px; }
 
-    /* Bara social media orizontală */
+    /* Bara social media mai sus */
     .social-bar {
       position: absolute;
-      bottom: 30px;
+      top: 240px; /* poți ajusta aici pentru poziția verticală */
       left: 50%;
       transform: translateX(-50%);
       display: flex;
-      gap: 20px;
+      gap: 25px;
     }
 
     .social-icon {
@@ -91,7 +91,7 @@
       <button class="control-button" id="btn-vol-down" onclick="volumeDown()">🔉</button>
       <button class="control-button" id="btn-vol-up" onclick="volumeUp()">🔊</button>
 
-      <!-- Iconuri social media orizontale -->
+      <!-- Iconuri social media pe orizontală, mai sus -->
       <div class="social-bar">
         <a href="https://facebook.com" target="_blank">
           <img src="https://cdn-icons-png.flaticon.com/512/733/733547.png" class="social-icon" alt="Facebook">
