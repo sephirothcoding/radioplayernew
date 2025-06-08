@@ -2,7 +2,7 @@
 <html lang="ro">
 <head>
   <meta charset="UTF-8">
-  <title>Radio Player Enhanced</title>
+  <title>Radio Player Red Theme</title>
   <style>
     * { box-sizing: border-box; }
     body {
@@ -21,8 +21,9 @@
     .radio-player { width:100%; height:100%; position:relative; }
     audio { display: none; }
     .now-playing {
-      position:absolute; top:10%; width:100%;
-      text-align:center; font-size:1rem;
+      position:absolute; top:8%; width:100%;
+      text-align:center; font-size:1.2rem;
+      font-weight:bold; text-shadow:0 0 10px rgba(255,255,255,0.6);
     }
     .spectrum {
       position:absolute; bottom:25%;
@@ -31,8 +32,10 @@
       width:80%; height:20%;
     }
     .bar {
-      background:#0cf; width:2%; height:10%;
+      background: linear-gradient(to top, #ff0000, #ffffff);
+      width:2%; height:10%;
       animation: bounce 1s infinite ease-in-out;
+      border-radius: 2px;
     }
     @keyframes bounce {
       0%,100% { height:10%; }
@@ -55,12 +58,12 @@
     }
     .ctrl-btn svg {
       width:100%; height:100%;
-      fill:#fff;
+      fill:#ff0000;
     }
-    .ctrl-btn.muted svg { fill:#f00; }
+    .ctrl-btn.muted svg { fill:#f55; }
     @media(max-width:500px) {
       .ctrl-btn { width:10vw; height:10vw; }
-      .now-playing { font-size:.9rem; }
+      .now-playing { font-size:1rem; }
     }
   </style>
 </head>
@@ -68,7 +71,7 @@
   <div class="container">
     <div class="radio-player">
       <audio id="radio" crossorigin="anonymous"></audio>
-      <div class="now-playing" id="nowPlaying">Loading...</div>
+      <div class="now-playing" id="nowPlaying">Conectare la stream...</div>
       <div class="spectrum" id="spectrum"></div>
       <div class="controls">
         <button class="ctrl-btn" id="btn-play">
@@ -91,12 +94,16 @@
           </svg>
         </button>
         <button class="ctrl-btn" id="btn-vol-down">
-          <svg viewBox="0 0 64 64"><polygon points="8,24 24,24 36,12 36,52 24,40 8,40"/>
-            <path d="M44 26 L52 26" stroke="#fff" stroke-width="4"/></svg>
+          <svg viewBox="0 0 64 64">
+            <polygon points="8,24 24,24 36,12 36,52 24,40 8,40"/>
+            <path d="M44 26 L52 26" stroke="#fff" stroke-width="4"/>
+          </svg>
         </button>
         <button class="ctrl-btn" id="btn-vol-up">
-          <svg viewBox="0 0 64 64"><polygon points="8,24 24,24 36,12 36,52 24,40 8,40"/>
-            <path d="M44 24 C48 28,48 36,44 40" stroke="#fff" stroke-width="4"/></svg>
+          <svg viewBox="0 0 64 64">
+            <polygon points="8,24 24,24 36,12 36,52 24,40 8,40"/>
+            <path d="M44 24 C48 28,48 36,44 40" stroke="#fff" stroke-width="4"/>
+          </svg>
         </button>
       </div>
     </div>
@@ -114,10 +121,11 @@
     analyser.fftSize = 64;
     const bufferLength = analyser.frequencyBinCount;
     const dataArray = new Uint8Array(bufferLength);
+
     for(let i=0;i<bufferLength;i++){
       const bar = document.createElement("div");
       bar.classList.add("bar");
-      bar.style.animationDelay = `${(i/ bufferLength)*500}ms`;
+      bar.style.animationDelay = `${(i / bufferLength) * 500}ms`;
       barsContainer.appendChild(bar);
     }
     const bars = barsContainer.children;
@@ -131,31 +139,32 @@
     }
     animate();
 
-    function fetchTitle(){
-      fetch('https://corsproxy.io/?https://c20.radioboss.fm:18054/stream')
-        .then(r=>r.headers.get('icy-name'))
-        .then(t=> now.textContent = 'Acum la radio: ' + (t || 'N/A'))
-        .catch(()=> now.textContent = 'Acum la radio: N/A');
+    function fetchTitle() {
+      now.textContent = "Red Dance Radio UK 🎧";
     }
-    setInterval(fetchTitle, 5000);
-    fetchTitle();
-    audio.src = 'https://c20.radioboss.fm:18054/stream';
 
-    document.getElementById("btn-play").onclick = ()=> audio.play();
-    document.getElementById("btn-pause").onclick = ()=> audio.pause();
-    document.getElementById("btn-stop").onclick = ()=>{
-      audio.pause(); audio.currentTime=0;
+    fetchTitle();
+    setInterval(fetchTitle, 10000);
+
+    audio.src = "https://boxstream.danceradiouk.com/stream/1/";
+    
+    document.getElementById("btn-play").onclick = () => {
+      audio.play().then(() => ctx.resume());
+    };
+    document.getElementById("btn-pause").onclick = () => audio.pause();
+    document.getElementById("btn-stop").onclick = () => {
+      audio.pause(); audio.currentTime = 0;
     };
     const muteBtn = document.getElementById("btn-mute");
-    muteBtn.onclick = ()=>{
+    muteBtn.onclick = () => {
       audio.muted = !audio.muted;
       muteBtn.classList.toggle('muted', audio.muted);
     };
-    document.getElementById("btn-vol-up").onclick = ()=>{
-      audio.volume = Math.min(1, audio.volume+0.1);
+    document.getElementById("btn-vol-up").onclick = () => {
+      audio.volume = Math.min(1, audio.volume + 0.1);
     };
-    document.getElementById("btn-vol-down").onclick = ()=>{
-      audio.volume = Math.max(0, audio.volume-0.1);
+    document.getElementById("btn-vol-down").onclick = () => {
+      audio.volume = Math.max(0, audio.volume - 0.1);
     };
   </script>
 </body>
