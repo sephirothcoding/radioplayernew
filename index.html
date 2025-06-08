@@ -2,158 +2,161 @@
 <html lang="ro">
 <head>
   <meta charset="UTF-8">
-  <title>Radio Player Responsive</title>
+  <title>Radio Player Enhanced</title>
   <style>
-    * {
-      box-sizing: border-box;
-    }
-
+    * { box-sizing: border-box; }
     body {
-      margin: 0;
-      background: #111;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      min-height: 100vh;
-      padding: 1rem;
+      margin: 0; background: #111;
+      display: flex; justify-content: center; align-items: center;
+      min-height: 100vh; padding: 1rem;
+      font-family: sans-serif; color: #fff;
     }
-
     .container {
-      width: 100%;
-      max-width: 746px;
-      aspect-ratio: 746 / 454;
-      background: url("https://xatimg.com/image/DJdO4pjMjlFh.jpg") no-repeat center center;
-      background-size: cover;
-      border-radius: 10px;
-      overflow: hidden;
-      box-shadow: 0 0 20px rgba(0, 0, 0, 0.7);
-      position: relative;
+      width: 100%; max-width: 746px;
+      aspect-ratio: 746/454;
+      background: url("https://xatimg.com/image/iytSFtTk86To.jpg") center/cover no-repeat;
+      position: relative; border-radius: 10px;
+      overflow: hidden; box-shadow: 0 0 20px rgba(0,0,0,0.7);
     }
-
-    .radio-player {
-      width: 100%;
-      height: 100%;
-      position: relative;
+    .radio-player { width:100%; height:100%; position:relative; }
+    audio { display: none; }
+    .now-playing {
+      position:absolute; top:10%; width:100%;
+      text-align:center; font-size:1rem;
     }
-
-    audio {
-      display: none;
+    .spectrum {
+      position:absolute; bottom:25%;
+      left:50%; transform:translateX(-50%);
+      display:flex; gap:2px; align-items:end;
+      width:80%; height:20%;
     }
-
+    .bar {
+      background:#0cf; width:2%; height:10%;
+      animation: bounce 1s infinite ease-in-out;
+    }
+    @keyframes bounce {
+      0%,100% { height:10%; }
+      50% { height:100%; }
+    }
     .controls {
-      position: absolute;
-      bottom: 8%;
-      left: 50%;
-      transform: translateX(-50%);
-      display: flex;
-      gap: 2vw;
+      position:absolute; bottom:8%; left:50%;
+      transform:translateX(-50%);
+      display:flex; gap:2vw; justify-content:center;
     }
-
-    .control-button {
-      width: 8vw;
-      max-width: 40px;
-      height: 8vw;
-      max-height: 40px;
-      border-radius: 50%;
-      background: linear-gradient(to bottom, #00c3ff, #0076d6);
-      border: none;
-      font-size: 1.2rem;
-      color: white;
-      box-shadow: 0 3px 6px rgba(0,0,0,0.6);
-      cursor: pointer;
+    .ctrl-btn {
+      width:8vw; max-width:40px;
+      height:8vw; max-height:40px;
+      background:none; border:none;
+      cursor:pointer;
+      transition:transform .2s;
     }
-
-    .social-bar {
-      position: absolute;
-      top: 10%;
-      left: 50%;
-      transform: translateX(-50%);
-      display: flex;
-      gap: 4vw;
-      align-items: center;
+    .ctrl-btn:hover {
+      transform:scale(1.2);
     }
-
-    .social-icon {
-      width: 6vw;
-      max-width: 32px;
-      height: auto;
-      transition: transform 0.2s;
+    .ctrl-btn svg {
+      width:100%; height:100%;
+      fill:#fff;
     }
-
-    .social-icon:hover {
-      transform: scale(1.2);
-    }
-
-    @media (max-width: 500px) {
-      .control-button {
-        width: 10vw;
-        height: 10vw;
-        font-size: 1rem;
-      }
-
-      .social-icon {
-        width: 8vw;
-      }
+    .ctrl-btn.muted svg { fill:#f00; }
+    @media(max-width:500px) {
+      .ctrl-btn { width:10vw; height:10vw; }
+      .now-playing { font-size:.9rem; }
     }
   </style>
 </head>
 <body>
   <div class="container">
     <div class="radio-player">
-      <audio id="radio" src="https://c20.radioboss.fm:18054/stream" type="audio/mpeg"></audio>
-
-      <!-- Butoane control -->
+      <audio id="radio" crossorigin="anonymous"></audio>
+      <div class="now-playing" id="nowPlaying">Loading...</div>
+      <div class="spectrum" id="spectrum"></div>
       <div class="controls">
-        <button class="control-button" onclick="playRadio()">▶</button>
-        <button class="control-button" onclick="pauseRadio()">⏸</button>
-        <button class="control-button" onclick="stopRadio()">⏹</button>
-        <button class="control-button" onclick="toggleMute()">🔇</button>
-        <button class="control-button" onclick="volumeDown()">🔉</button>
-        <button class="control-button" onclick="volumeUp()">🔊</button>
-      </div>
-
-      <!-- Social Media -->
-      <div class="social-bar">
-        <a href="https://facebook.com" target="_blank">
-          <img src="https://cdn-icons-png.flaticon.com/512/733/733547.png" class="social-icon" alt="Facebook">
-        </a>
-        <a href="https://instagram.com" target="_blank">
-          <img src="https://cdn-icons-png.flaticon.com/512/2111/2111463.png" class="social-icon" alt="Instagram">
-        </a>
-        <a href="https://youtube.com" target="_blank">
-          <img src="https://cdn-icons-png.flaticon.com/512/1384/1384060.png" class="social-icon" alt="YouTube">
-        </a>
+        <button class="ctrl-btn" id="btn-play">
+          <svg viewBox="0 0 64 64"><polygon points="16,8 56,32 16,56"/></svg>
+        </button>
+        <button class="ctrl-btn" id="btn-pause">
+          <svg viewBox="0 0 64 64">
+            <rect x="16" y="8" width="12" height="48"/>
+            <rect x="36" y="8" width="12" height="48"/>
+          </svg>
+        </button>
+        <button class="ctrl-btn" id="btn-stop">
+          <svg viewBox="0 0 64 64"><rect x="16" y="16" width="32" height="32"/></svg>
+        </button>
+        <button class="ctrl-btn" id="btn-mute">
+          <svg viewBox="0 0 64 64">
+            <polygon points="8,24 24,24 36,12 36,52 24,40 8,40"/>
+            <line x1="42" y1="22" x2="56" y2="42" stroke="#fff" stroke-width="4"/>
+            <line x1="56" y1="22" x2="42" y2="42" stroke="#fff" stroke-width="4"/>
+          </svg>
+        </button>
+        <button class="ctrl-btn" id="btn-vol-down">
+          <svg viewBox="0 0 64 64"><polygon points="8,24 24,24 36,12 36,52 24,40 8,40"/>
+            <path d="M44 26 L52 26" stroke="#fff" stroke-width="4"/></svg>
+        </button>
+        <button class="ctrl-btn" id="btn-vol-up">
+          <svg viewBox="0 0 64 64"><polygon points="8,24 24,24 36,12 36,52 24,40 8,40"/>
+            <path d="M44 24 C48 28,48 36,44 40" stroke="#fff" stroke-width="4"/></svg>
+        </button>
       </div>
     </div>
   </div>
 
   <script>
-    const radio = document.getElementById("radio");
-
-    function playRadio() {
-      radio.play();
+    const audio = document.getElementById("radio");
+    const now = document.getElementById("nowPlaying");
+    const barsContainer = document.getElementById("spectrum");
+    const ctx = new (window.AudioContext ?? window.webkitAudioContext)();
+    const analyser = ctx.createAnalyser();
+    const source = ctx.createMediaElementSource(audio);
+    source.connect(analyser);
+    analyser.connect(ctx.destination);
+    analyser.fftSize = 64;
+    const bufferLength = analyser.frequencyBinCount;
+    const dataArray = new Uint8Array(bufferLength);
+    for(let i=0;i<bufferLength;i++){
+      const bar = document.createElement("div");
+      bar.classList.add("bar");
+      bar.style.animationDelay = `${(i/ bufferLength)*500}ms`;
+      barsContainer.appendChild(bar);
     }
+    const bars = barsContainer.children;
 
-    function pauseRadio() {
-      radio.pause();
+    function animate() {
+      analyser.getByteFrequencyData(dataArray);
+      for(let i=0;i<bars.length;i++){
+        bars[i].style.height = `${(dataArray[i]/255)*100}%`;
+      }
+      requestAnimationFrame(animate);
     }
+    animate();
 
-    function stopRadio() {
-      radio.pause();
-      radio.currentTime = 0;
+    function fetchTitle(){
+      fetch('https://corsproxy.io/?https://c20.radioboss.fm:18054/stream')
+        .then(r=>r.headers.get('icy-name'))
+        .then(t=> now.textContent = 'Acum la radio: ' + (t || 'N/A'))
+        .catch(()=> now.textContent = 'Acum la radio: N/A');
     }
+    setInterval(fetchTitle, 5000);
+    fetchTitle();
+    audio.src = 'https://c20.radioboss.fm:18054/stream';
 
-    function toggleMute() {
-      radio.muted = !radio.muted;
-    }
-
-    function volumeUp() {
-      if (radio.volume < 1) radio.volume = Math.min(1, radio.volume + 0.1);
-    }
-
-    function volumeDown() {
-      if (radio.volume > 0) radio.volume = Math.max(0, radio.volume - 0.1);
-    }
+    document.getElementById("btn-play").onclick = ()=> audio.play();
+    document.getElementById("btn-pause").onclick = ()=> audio.pause();
+    document.getElementById("btn-stop").onclick = ()=>{
+      audio.pause(); audio.currentTime=0;
+    };
+    const muteBtn = document.getElementById("btn-mute");
+    muteBtn.onclick = ()=>{
+      audio.muted = !audio.muted;
+      muteBtn.classList.toggle('muted', audio.muted);
+    };
+    document.getElementById("btn-vol-up").onclick = ()=>{
+      audio.volume = Math.min(1, audio.volume+0.1);
+    };
+    document.getElementById("btn-vol-down").onclick = ()=>{
+      audio.volume = Math.max(0, audio.volume-0.1);
+    };
   </script>
 </body>
 </html>
