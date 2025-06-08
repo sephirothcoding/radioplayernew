@@ -2,79 +2,98 @@
 <html lang="ro">
 <head>
   <meta charset="UTF-8">
-  <title>Radio Player</title>
+  <title>Radio Player Responsive</title>
   <style>
+    * {
+      box-sizing: border-box;
+    }
+
     body {
       margin: 0;
       background: #111;
       display: flex;
       justify-content: center;
       align-items: center;
-      height: 100vh;
+      min-height: 100vh;
+      padding: 1rem;
     }
 
     .container {
-      width: 746px;
-      height: 454px;
+      width: 100%;
+      max-width: 746px;
+      aspect-ratio: 746 / 454;
       background: url("https://xatimg.com/image/aGBLR1MOWcPH.jpg") no-repeat center center;
       background-size: cover;
-      position: relative;
       border-radius: 10px;
       overflow: hidden;
-      box-shadow: 0 0 20px rgba(0,0,0,0.7);
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.7);
+      position: relative;
     }
 
     .radio-player {
-      position: absolute;
-      top: 0;
-      left: 0;
       width: 100%;
       height: 100%;
+      position: relative;
     }
 
-    .radio-player audio {
+    audio {
       display: none;
     }
 
-    /* Butoane control - 70% dimensiune și repoziționate */
-    .control-button {
-      width: 35px;
-      height: 35px;
-      border-radius: 50%;
-      background: linear-gradient(to bottom, #00c3ff, #0076d6);
-      border: none;
-      font-size: 16px;
-      color: white;
-      box-shadow: 0 3px 6px rgba(0,0,0,0.6);
-      cursor: pointer;
+    .controls {
       position: absolute;
-    }
-
-    #btn-play      { bottom: 55px; left: 210px; }
-    #btn-pause     { bottom: 55px; left: 255px; }
-    #btn-stop      { bottom: 55px; left: 300px; }
-    #btn-mute      { bottom: 55px; left: 345px; }
-    #btn-vol-down  { bottom: 55px; left: 390px; }
-    #btn-vol-up    { bottom: 55px; left: 435px; }
-
-    /* Bara social media – mai sus și scalată */
-    .social-bar {
-      position: absolute;
-      top: 170px;
+      bottom: 8%;
       left: 50%;
       transform: translateX(-50%);
       display: flex;
-      gap: 18px;
+      gap: 2vw;
+    }
+
+    .control-button {
+      width: 8vw;
+      max-width: 40px;
+      height: 8vw;
+      max-height: 40px;
+      border-radius: 50%;
+      background: linear-gradient(to bottom, #00c3ff, #0076d6);
+      border: none;
+      font-size: 1.2rem;
+      color: white;
+      box-shadow: 0 3px 6px rgba(0,0,0,0.6);
+      cursor: pointer;
+    }
+
+    .social-bar {
+      position: absolute;
+      top: 10%;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 4vw;
+      align-items: center;
     }
 
     .social-icon {
-      width: 28px;
-      height: 28px;
+      width: 6vw;
+      max-width: 32px;
+      height: auto;
       transition: transform 0.2s;
     }
 
     .social-icon:hover {
       transform: scale(1.2);
+    }
+
+    @media (max-width: 500px) {
+      .control-button {
+        width: 10vw;
+        height: 10vw;
+        font-size: 1rem;
+      }
+
+      .social-icon {
+        width: 8vw;
+      }
     }
   </style>
 </head>
@@ -84,14 +103,16 @@
       <audio id="radio" src="https://c20.radioboss.fm:18054/stream" type="audio/mpeg"></audio>
 
       <!-- Butoane control -->
-      <button class="control-button" id="btn-play" onclick="playRadio()">▶</button>
-      <button class="control-button" id="btn-pause" onclick="pauseRadio()">⏸</button>
-      <button class="control-button" id="btn-stop" onclick="stopRadio()">⏹</button>
-      <button class="control-button" id="btn-mute" onclick="toggleMute()">🔇</button>
-      <button class="control-button" id="btn-vol-down" onclick="volumeDown()">🔉</button>
-      <button class="control-button" id="btn-vol-up" onclick="volumeUp()">🔊</button>
+      <div class="controls">
+        <button class="control-button" onclick="playRadio()">▶</button>
+        <button class="control-button" onclick="pauseRadio()">⏸</button>
+        <button class="control-button" onclick="stopRadio()">⏹</button>
+        <button class="control-button" onclick="toggleMute()">🔇</button>
+        <button class="control-button" onclick="volumeDown()">🔉</button>
+        <button class="control-button" onclick="volumeUp()">🔊</button>
+      </div>
 
-      <!-- Iconuri social media -->
+      <!-- Social Media -->
       <div class="social-bar">
         <a href="https://facebook.com" target="_blank">
           <img src="https://cdn-icons-png.flaticon.com/512/733/733547.png" class="social-icon" alt="Facebook">
