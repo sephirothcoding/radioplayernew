@@ -14,8 +14,8 @@
     }
 
     .container {
-      width: 1066px;
-      height: 649px;
+      width: 746px;
+      height: 454px;
       background: url("https://xatimg.com/image/aGBLR1MOWcPH.jpg") no-repeat center center;
       background-size: cover;
       position: relative;
@@ -36,40 +36,40 @@
       display: none;
     }
 
-    /* Butoane control */
+    /* Butoane control - 70% dimensiune și repoziționate */
     .control-button {
-      width: 50px;
-      height: 50px;
+      width: 35px;
+      height: 35px;
       border-radius: 50%;
       background: linear-gradient(to bottom, #00c3ff, #0076d6);
       border: none;
-      font-size: 22px;
+      font-size: 16px;
       color: white;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.6);
+      box-shadow: 0 3px 6px rgba(0,0,0,0.6);
       cursor: pointer;
       position: absolute;
     }
 
-    #btn-play      { bottom: 80px; left: 300px; }
-    #btn-pause     { bottom: 80px; left: 360px; }
-    #btn-stop      { bottom: 80px; left: 420px; }
-    #btn-mute      { bottom: 80px; left: 480px; }
-    #btn-vol-down  { bottom: 80px; left: 540px; }
-    #btn-vol-up    { bottom: 80px; left: 600px; }
+    #btn-play      { bottom: 55px; left: 210px; }
+    #btn-pause     { bottom: 55px; left: 255px; }
+    #btn-stop      { bottom: 55px; left: 300px; }
+    #btn-mute      { bottom: 55px; left: 345px; }
+    #btn-vol-down  { bottom: 55px; left: 390px; }
+    #btn-vol-up    { bottom: 55px; left: 435px; }
 
-    /* Bara social media mai sus */
+    /* Bara social media – mai sus și scalată */
     .social-bar {
       position: absolute;
-      top: 240px; /* poți ajusta aici pentru poziția verticală */
+      top: 170px;
       left: 50%;
       transform: translateX(-50%);
       display: flex;
-      gap: 25px;
+      gap: 18px;
     }
 
     .social-icon {
-      width: 40px;
-      height: 40px;
+      width: 28px;
+      height: 28px;
       transition: transform 0.2s;
     }
 
@@ -91,7 +91,7 @@
       <button class="control-button" id="btn-vol-down" onclick="volumeDown()">🔉</button>
       <button class="control-button" id="btn-vol-up" onclick="volumeUp()">🔊</button>
 
-      <!-- Iconuri social media pe orizontală, mai sus -->
+      <!-- Iconuri social media -->
       <div class="social-bar">
         <a href="https://facebook.com" target="_blank">
           <img src="https://cdn-icons-png.flaticon.com/512/733/733547.png" class="social-icon" alt="Facebook">
