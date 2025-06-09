@@ -45,27 +45,31 @@
     .controls {
       position:absolute; bottom:8%; left:50%;
       transform:translateX(-50%);
-      display:flex; gap:1.5vw; justify-content:center;
+      display:flex; gap:2.5vw; justify-content:center;
       align-items: center;
     }
     .ctrl-btn {
-      width:8vw; max-width:40px;
-      height:8vw; max-height:40px;
-      background:none; border:none;
+      width:10vw; max-width:50px;
+      height:10vw; max-height:50px;
+      background:none; border: 2px solid #ff0000;
+      border-radius: 12px;
       cursor:pointer;
-      transition: transform 0.2s ease;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
       display: flex;
       justify-content: center;
       align-items: center;
+      filter: drop-shadow(0 0 3px #ff0000);
     }
     .ctrl-btn:hover {
-      animation: hoverPulse 0.6s infinite alternate;
-      transform: scale(1.2);
-      filter: drop-shadow(0 0 6px #ff0000);
+      animation: hoverPulse 0.7s infinite alternate;
+      transform: scale(1.3);
+      box-shadow: 0 0 12px 4px #ff0000;
+      filter: drop-shadow(0 0 10px #ff0000);
     }
     .ctrl-btn svg {
-      width:100%; height:100%;
-      fill:#ff0000;
+      width: 60%; height: 60%;
+      fill: #ff0000;
+      transition: fill 0.3s ease;
     }
     .ctrl-btn.muted svg { fill:#f55; }
     .social-media {
@@ -100,11 +104,11 @@
     .social-media a.instagram svg { fill: #E1306C; }
 
     @keyframes hoverPulse {
-      0% { transform: scale(1.0); filter: drop-shadow(0 0 3px #ff0000); }
-      100% { transform: scale(1.2); filter: drop-shadow(0 0 8px #ff0000); }
+      0% { transform: scale(1.0); filter: drop-shadow(0 0 4px #ff0000); }
+      100% { transform: scale(1.3); filter: drop-shadow(0 0 15px #ff0000); }
     }
     @media(max-width:500px) {
-      .ctrl-btn { width:10vw; height:10vw; }
+      .ctrl-btn { width:15vw; height:15vw; max-width:none; max-height:none; }
       .now-playing { font-size:1rem; }
     }
   </style>
@@ -127,15 +131,14 @@
         </a>
         <a href="https://www.instagram.com/" target="_blank" rel="noopener" class="instagram" aria-label="Instagram">
           <svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-            <path d="M12 2.163c3.204 0 3.584.012 4.85.07 1.17.056 1.97.24 2.43.414a4.92 4.92 0 0 1 1.675 1.072 4.92 4.92 0 0 1 1.072 1.675c.174.46.358 1.26.414 2.43.058 1.266.07 1.645.07 4.85s-.012 3.584-.07 4.85c-.056 1.17-.24 1.97-.414 2.43a4.902 4.902 0 0 1-1.072 1.675 4.902 4.902 0 0 1-1.675 1.072c-.46.174-1.26.358-2.43.414-1.266.058-1.645.07-4.85.07s-3.584-.012-4.85-.07c-1.17-.056-1.97-.24-2.43-.414a4.92 4.92 0 0 1-1.675-1.072 4.92 4.92 0 0 1-1.072-1.675c-.174-.46-.358-1.26-.414-2.43-.058-1.266-.07-1.645-.07-4.85s.012-3.584.07-4.85c.056-1.17.24-1.97.414-2.43a4.902 4.902 0 0 1 1.072-1.675 4.902 4.902 0 0 1 1.675-1.072c.46-.174 1.26-.358 2.43-.414 1.266-.058 1.645-.07 4.85-.07zm0-2.163C8.755 0 8.333 0 7.052.013 5.777.026 4.607.13 3.553.383 2.496.636 1.56 1.124.77 1.913.024 2.658 0 3.57 0 4.9v14.199c0 1.33.024 2.243.77 2.988.79.79 1.726 1.278 2.782 1.53.922.243 2.092.346 3.367.358C8.333 23.987 8.755 24 12 24s3.667-.013 4.948-.026c1.275-.012 2.445-.115 3.367-.358 1.056-.252 1.992-.74 2.782-1.53.746-.745.77-1.657.77-2.988V4.9c0-1.33-.024-2.243-.77-2.988-.79-.79-1.726-1.278-2.782-1.53- .922-.243-2.092-.346-3.367-.358C15.667.013 15.245 0 12 0z"/>
-            <circle cx="12" cy="12" r="3.6"/>
+            <path d="M12 2.163c3.204 0 3.584.012 4.85.07 1.17.056 1.97.24 2.43.414a4.92 4.92 0 0 1 1.675 1.072 4.92 4.92 0 0 1 1.072 1.675c.174.46.358 1.26.414 2.43.058 1.266.07 1.645.07 4.85s-.012 3.584-.07 4.85c-.056 1.17-.24 1.97-.414 2.43a4.902 4.902 0 0 1-1.072 1.675 4.902 4.902 0 0 1-1.675 1.072c-.46.174-1.26.358-2.43.414-1.266.058-1.645.07-4.85.07s-3.584-.012-4.85-.07c-1.17-.056-1.97-.24-2.43-.414a4.92 4.92 0 0 1-1.675-1.072 4.92 4.92 0 0 1-1.072-1.675c-.174-.46-.358-1.26-.414-2.43C2.175 15.746 2.163 15.367 2.163 12s.012-3.584.07-4.85c.056-1.17.24-1.97.414-2.43a4.92 4.92 0 0 1 1.072-1.675 4.92 4.92 0 0 1 1.675-1.072c.46-.174 1.26-.358 2.43-.414C8.416 2.175 8.796 2.163 12 2.163zM12 0C8.741 0 8.332.013 7.052.072 5.771.131 4.633.388 3.68.844 2.683 1.326 1.828 2.181 1.346 3.178c-.456.954-.713 2.093-.772 3.373C.013 8.332 0 8.741 0 12c0 3.259.013 3.668.072 4.948.059 1.28.316 2.418.772 3.373.482.997 1.337 1.852 2.334 2.334.954.456 2.093.713 3.373.772 1.28.059 1.689.072 4.948.072s3.668-.013 4.948-.072c1.28-.059 2.418-.316 3.373-.772.997-.482 1.852-1.337 2.334-2.334.456-.954.713-2.093.772-3.373.059-1.28.072-1.689.072-4.948s-.013-3.668-.072-4.948c-.059-1.28-.316-2.418-.772-3.373-.482-.997-1.337-1.852-2.334-2.334-.954-.456-2.093-.713-3.373-.772C15.668.013 15.259 0 12 0zM12 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zm0 10.162a3.999 3.999 0 1 1 0-7.998 3.999 3.999 0 0 1 0 7.998zm6.406-11.845a1.44 1.44 0 1 0 0 2.879 1.44 1.44 0 0 0 0-2.879z"/>
           </svg>
         </a>
       </div>
 
-      <div class="now-playing" id="nowPlaying">Radio Online</div>
+      <div class="now-playing" id="nowPlaying">Radio Online - Stopped</div>
 
-      <div class="spectrum" id="spectrum">
+      <div class="spectrum" aria-hidden="true">
         <div class="bar" style="animation-delay: 0s;"></div>
         <div class="bar" style="animation-delay: 0.1s;"></div>
         <div class="bar" style="animation-delay: 0.2s;"></div>
@@ -149,9 +152,15 @@
       </div>
 
       <div class="controls">
-        <button class="ctrl-btn" id="playPauseBtn" aria-label="Play/Pause">
+        <button class="ctrl-btn" id="playBtn" aria-label="Play">
           <svg viewBox="0 0 64 64">
             <polygon points="16,12 56,32 16,52" />
+          </svg>
+        </button>
+        <button class="ctrl-btn" id="pauseBtn" aria-label="Pause">
+          <svg viewBox="0 0 64 64">
+            <rect x="16" y="12" width="10" height="40"/>
+            <rect x="38" y="12" width="10" height="40"/>
           </svg>
         </button>
         <button class="ctrl-btn" id="stopBtn" aria-label="Stop">
@@ -183,7 +192,8 @@
 
   <script>
     const radio = document.getElementById('radio');
-    const playPauseBtn = document.getElementById('playPauseBtn');
+    const playBtn = document.getElementById('playBtn');
+    const pauseBtn = document.getElementById('pauseBtn');
     const stopBtn = document.getElementById('stopBtn');
     const muteBtn = document.getElementById('muteBtn');
     const volUpBtn = document.getElementById('volUpBtn');
@@ -194,41 +204,33 @@
     radio.src = "https://stream-url-example.com/stream";
     radio.volume = 0.5;
 
-    // Play / Pause toggle
-    playPauseBtn.addEventListener('click', () => {
-      if (radio.paused) {
-        radio.play();
-        playPauseBtn.innerHTML = `<svg viewBox="0 0 64 64"><rect x="16" y="12" width="10" height="40"/><rect x="38" y="12" width="10" height="40"/></svg>`;
-        nowPlaying.textContent = "Radio Online - Playing";
-      } else {
-        radio.pause();
-        playPauseBtn.innerHTML = `<svg viewBox="0 0 64 64"><polygon points="16,12 56,32 16,52" /></svg>`;
-        nowPlaying.textContent = "Radio Online - Paused";
-      }
+    playBtn.addEventListener('click', () => {
+      radio.play();
+      nowPlaying.textContent = "Radio Online - Playing";
     });
 
-    // Stop
+    pauseBtn.addEventListener('click', () => {
+      radio.pause();
+      nowPlaying.textContent = "Radio Online - Paused";
+    });
+
     stopBtn.addEventListener('click', () => {
       radio.pause();
       radio.currentTime = 0;
-      playPauseBtn.innerHTML = `<svg viewBox="0 0 64 64"><polygon points="16,12 56,32 16,52" /></svg>`;
       nowPlaying.textContent = "Radio Online - Stopped";
     });
 
-    // Mute / Unmute toggle
     muteBtn.addEventListener('click', () => {
       radio.muted = !radio.muted;
       muteBtn.classList.toggle('muted', radio.muted);
     });
 
-    // Volume Up
     volUpBtn.addEventListener('click', () => {
       if (radio.volume < 1) {
         radio.volume = Math.min(1, radio.volume + 0.1);
       }
     });
 
-    // Volume Down
     volDownBtn.addEventListener('click', () => {
       if (radio.volume > 0) {
         radio.volume = Math.max(0, radio.volume - 0.1);
