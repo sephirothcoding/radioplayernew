@@ -45,7 +45,8 @@
     .controls {
       position:absolute; bottom:8%; left:50%;
       transform:translateX(-50%);
-      display:flex; gap:2vw; justify-content:center;
+      display:flex; gap:1.5vw; justify-content:center;
+      align-items: center;
     }
     .ctrl-btn {
       width:8vw; max-width:40px;
@@ -53,6 +54,9 @@
       background:none; border:none;
       cursor:pointer;
       transition: transform 0.2s ease;
+      display: flex;
+      justify-content: center;
+      align-items: center;
     }
     .ctrl-btn:hover {
       animation: hoverPulse 0.6s infinite alternate;
@@ -150,24 +154,47 @@
             <polygon points="16,12 56,32 16,52" />
           </svg>
         </button>
+        <button class="ctrl-btn" id="stopBtn" aria-label="Stop">
+          <svg viewBox="0 0 64 64">
+            <rect x="16" y="16" width="32" height="32" />
+          </svg>
+        </button>
         <button class="ctrl-btn" id="muteBtn" aria-label="Mute/Unmute">
           <svg viewBox="0 0 64 64" id="muteIcon">
             <polygon points="16,24 28,24 40,12 40,52 28,40 16,40" />
           </svg>
         </button>
+        <button class="ctrl-btn" id="volUpBtn" aria-label="Volume Up">
+          <svg viewBox="0 0 64 64">
+            <polygon points="48,32 36,20 36,44" />
+            <rect x="52" y="28" width="4" height="8" />
+          </svg>
+        </button>
+        <button class="ctrl-btn" id="volDownBtn" aria-label="Volume Down">
+          <svg viewBox="0 0 64 64">
+            <polygon points="16,32 28,20 28,44" />
+            <rect x="12" y="28" width="4" height="8" />
+          </svg>
+        </button>
       </div>
+
     </div>
   </div>
 
   <script>
     const radio = document.getElementById('radio');
     const playPauseBtn = document.getElementById('playPauseBtn');
+    const stopBtn = document.getElementById('stopBtn');
     const muteBtn = document.getElementById('muteBtn');
+    const volUpBtn = document.getElementById('volUpBtn');
+    const volDownBtn = document.getElementById('volDownBtn');
     const nowPlaying = document.getElementById('nowPlaying');
 
-    // Exemplu URL radio - înlocuiește cu stream-ul tău real
+    // Înlocuiește cu URL-ul tău real de stream
     radio.src = "https://stream-url-example.com/stream";
+    radio.volume = 0.5;
 
+    // Play / Pause toggle
     playPauseBtn.addEventListener('click', () => {
       if (radio.paused) {
         radio.play();
@@ -180,9 +207,32 @@
       }
     });
 
+    // Stop
+    stopBtn.addEventListener('click', () => {
+      radio.pause();
+      radio.currentTime = 0;
+      playPauseBtn.innerHTML = `<svg viewBox="0 0 64 64"><polygon points="16,12 56,32 16,52" /></svg>`;
+      nowPlaying.textContent = "Radio Online - Stopped";
+    });
+
+    // Mute / Unmute toggle
     muteBtn.addEventListener('click', () => {
       radio.muted = !radio.muted;
       muteBtn.classList.toggle('muted', radio.muted);
+    });
+
+    // Volume Up
+    volUpBtn.addEventListener('click', () => {
+      if (radio.volume < 1) {
+        radio.volume = Math.min(1, radio.volume + 0.1);
+      }
+    });
+
+    // Volume Down
+    volDownBtn.addEventListener('click', () => {
+      if (radio.volume > 0) {
+        radio.volume = Math.max(0, radio.volume - 0.1);
+      }
     });
   </script>
 </body>
