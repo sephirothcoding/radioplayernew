@@ -73,28 +73,23 @@
       transition: fill 0.3s ease;
     }
     .ctrl-btn.muted svg { fill:#66ccff; }
+
     .social-media {
       position: absolute;
-      bottom: 4%;
-      right: 4%;
+      bottom: 54%; /* MODIFICARE: mutat mai sus cu 50% față de poziția inițială */
+      right: 15%;  /* MODIFICARE: poziționat la 15% din marginea din dreapta */
       display: flex;
       gap: 1rem;
       z-index: 10;
     }
     .social-media a {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 36px;
-    height: 36px;
-    transition: transform 0.2s ease;
-    position: absolute;
-    right: 16%;
-    top: 50%;
-    transform: translateY(-50%);
-}
-
-    
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 36px;
+      height: 36px;
+      transition: transform 0.2s ease;
+    }
     .social-media a svg {
       width: 24px;
       height: 24px;
@@ -169,6 +164,7 @@
             <rect x="12" y="28" width="4" height="8" />
           </svg>
         </button>
+        <div id="volumeDisplay" style="margin-left: 10px; font-size: 0.9rem; color: skyblue;"></div>
       </div>
       <div class="social-media">
         <a href="https://www.youtube.com/" target="_blank" rel="noopener" class="youtube" aria-label="YouTube">
@@ -198,13 +194,19 @@
     const volUpBtn = document.getElementById('volUpBtn');
     const volDownBtn = document.getElementById('volDownBtn');
     const nowPlaying = document.getElementById('nowPlaying');
+    const volumeDisplay = document.getElementById('volumeDisplay');
 
     radio.src = "https://stream-url-example.com/stream";
     radio.volume = 0.5;
 
+    function updateVolumeDisplay() {
+      volumeDisplay.textContent = `Volume: ${(radio.volume * 100).toFixed(0)}%`;
+    }
+
     playBtn.addEventListener('click', () => {
       radio.play();
       nowPlaying.textContent = "Radio Online - Playing";
+      updateVolumeDisplay();
     });
 
     pauseBtn.addEventListener('click', () => {
@@ -226,14 +228,18 @@
     volUpBtn.addEventListener('click', () => {
       if (radio.volume < 1) {
         radio.volume = Math.min(1, radio.volume + 0.1);
+        updateVolumeDisplay();
       }
     });
 
     volDownBtn.addEventListener('click', () => {
       if (radio.volume > 0) {
         radio.volume = Math.max(0, radio.volume - 0.1);
+        updateVolumeDisplay();
       }
     });
+
+    updateVolumeDisplay();
   </script>
 </body>
 </html>
