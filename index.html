@@ -1,152 +1,196 @@
 <!DOCTYPE html>
-<html lang="ro">
+<html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Radio Player SkyBlue</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Skyblue Radio Player</title>
   <style>
+    * { box-sizing: border-box; }
     body {
-      margin: 0;
-      font-family: "Segoe UI", sans-serif;
-      background: url("https://xatimg.com/image/iytSFtTk86To.jpg") no-repeat center center fixed;
-      background-size: cover;
+      margin: 0; background: #111;
+      display: flex; justify-content: center; align-items: center;
+      min-height: 100vh; padding: 1rem;
+      font-family: sans-serif; color: #fff;
+    }
+    .container {
+      width: 100%; max-width: 746px;
+      aspect-ratio: 746/454;
+      background: url("https://xatimg.com/image/MjrfTBrFc0sO.jpg") center/cover no-repeat;
+      position: relative; border-radius: 10px;
+      overflow: hidden; box-shadow: 0 0 20px rgba(0,0,0,0.7);
+    }
+    .radio-player { width:100%; height:100%; position:relative; }
+    audio { display: none; }
+    .now-playing {
+      position:absolute; top:8%; width:100%;
+      text-align:center; font-size:1.2rem;
+      font-weight:bold; color: black;
+      text-shadow:0 0 10px rgba(255,255,255,0.6);
+    }
+    .spectrum {
+      position:absolute; bottom:25%;
+      left:50%; transform:translateX(-50%);
+      display:flex; gap:2px; align-items:end;
+      width:80%; height:20%;
+    }
+    .bar {
+      background: linear-gradient(to top, skyblue, #ffffff);
+      width:2%; height:10%;
+      animation: bounce 1s infinite ease-in-out;
+      border-radius: 2px;
+    }
+    @keyframes bounce {
+      0%,100% { height:10%; }
+      50% { height:100%; }
+    }
+    .controls {
+      position:absolute; bottom:8%; left:50%;
+      transform:translateX(-50%);
+      display:flex; gap:2.5vw; justify-content:center;
+      align-items: center;
+    }
+    .ctrl-btn {
+      width:10vw; max-width:50px;
+      height:10vw; max-height:50px;
+      background:none; border: 2px solid skyblue;
+      border-radius: 12px;
+      cursor:pointer;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
       display: flex;
       justify-content: center;
       align-items: center;
-      height: 100vh;
-      color: white;
+      filter: drop-shadow(0 0 3px skyblue);
     }
-
-    .player-container {
-      background: rgba(135, 206, 250, 0.9); /* skyblue cu opacitate */
-      border-radius: 20px;
-      padding: 30px;
-      box-shadow: 0 0 20px #87cefa;
-      max-width: 500px;
-      width: 100%;
-      text-align: center;
-      position: relative;
-    }
-
-    .now-playing {
-      font-size: 20px;
-      margin-bottom: 15px;
-      font-weight: bold;
-      color: #003366;
-    }
-
-    .spectrum {
-      display: flex;
-      justify-content: center;
-      align-items: flex-end;
-      height: 40px;
-      margin-bottom: 20px;
-      gap: 2px;
-    }
-
-    .bar {
-      width: 4px;
-      height: 100%;
-      background: #003366;
-      animation: bounce 1.2s infinite ease-in-out;
-    }
-
-    @keyframes bounce {
-      0%, 100% { transform: scaleY(1); }
-      50% { transform: scaleY(0.3); }
-    }
-
-    .controls {
-      display: flex;
-      justify-content: center;
-      flex-wrap: wrap;
-      gap: 15px;
-    }
-
-    .ctrl-btn {
-      background: #005f9e;
-      border: none;
-      border-radius: 10px;
-      padding: 10px;
-      cursor: pointer;
-      transition: background 0.3s;
-    }
-
     .ctrl-btn:hover {
-      background: #004070;
+      animation: hoverPulse 0.7s infinite alternate;
+      transform: scale(1.3);
+      box-shadow: 0 0 12px 4px skyblue;
+      filter: drop-shadow(0 0 10px skyblue);
     }
-
     .ctrl-btn svg {
-      fill: white;
-      width: 24px;
-      height: 24px;
+      width: 60%; height: 60%;
+      fill: skyblue;
+      transition: fill 0.3s ease;
     }
-
-    .social {
+    .ctrl-btn.muted svg { fill:#66ccff; }
+    .social-media {
       position: absolute;
-      bottom: 20px;
-      right: 30px;
+      bottom: 4%;
+      right: 4%;
       display: flex;
-      gap: 15px;
+      gap: 1rem;
+      z-index: 10;
     }
+    .social-media a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    transition: transform 0.2s ease;
+    position: absolute;
+    right: 16%;
+    top: 50%;
+    transform: translateY(-50%);
+}
 
-    .social a svg {
-      fill: white;
+    
+    .social-media a svg {
       width: 24px;
       height: 24px;
-      transition: transform 0.3s;
     }
-
-    .social a:hover svg {
+    .social-media a:hover {
+      animation: hoverPulse 0.6s infinite alternate;
       transform: scale(1.2);
+      filter: drop-shadow(0 0 6px skyblue);
+    }
+    .social-media a.youtube svg { fill: #FF0000; }
+    .social-media a.facebook svg { fill: #1877F2; }
+    .social-media a.instagram svg { fill: #E1306C; }
+
+    @keyframes hoverPulse {
+      0% { transform: scale(1.0); filter: drop-shadow(0 0 4px skyblue); }
+      100% { transform: scale(1.3); filter: drop-shadow(0 0 15px skyblue); }
+    }
+    @media(max-width:500px) {
+      .ctrl-btn { width:15vw; height:15vw; max-width:none; max-height:none; }
+      .now-playing { font-size:1rem; }
     }
   </style>
 </head>
 <body>
-  <div class="player-container">
-    <audio id="radio" preload="none"></audio>
-
-    <div class="now-playing" id="nowPlaying">Ascultă radio...</div>
-
-    <div class="spectrum" id="spectrum">
-      <!-- 30 bari mici -->
-      ${Array.from({ length: 30 }, (_, i) => `<div class="bar" style="animation-delay: ${i * 0.04}s"></div>`).join('')}
-    </div>
-
-    <div class="controls">
-      <button id="playBtn" class="ctrl-btn" aria-label="Play">
-        <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
-      </button>
-      <button id="pauseBtn" class="ctrl-btn" aria-label="Pause">
-        <svg viewBox="0 0 24 24"><path d="M6 19h4V5H6zm8-14v14h4V5z"/></svg>
-      </button>
-      <button id="stopBtn" class="ctrl-btn" aria-label="Stop">
-        <svg viewBox="0 0 24 24"><path d="M6 6h12v12H6z"/></svg>
-      </button>
-      <button id="muteBtn" class="ctrl-btn" aria-label="Mute">
-        <svg viewBox="0 0 24 24"><path d="M16.5 12l5 5m0-10l-5 5m-5-6v16l-6-6H2V8h3l6-6z"/></svg>
-      </button>
-      <button id="volUpBtn" class="ctrl-btn" aria-label="Volum +">
-        <svg viewBox="0 0 24 24"><path d="M3 10v4h4l5 5V5L7 10H3zm13.5 2c0-1.77-1.02-3.29-2.5-4.03v8.06c1.48-.74 2.5-2.26 2.5-4.03z"/></svg>
-      </button>
-      <button id="volDownBtn" class="ctrl-btn" aria-label="Volum -">
-        <svg viewBox="0 0 24 24"><path d="M3 10v4h4l5 5V5L7 10H3z"/></svg>
-      </button>
-    </div>
-
-    <div class="social">
-      <a href="https://facebook.com" target="_blank" aria-label="Facebook">
-        <svg viewBox="0 0 24 24"><path d="M22 12A10 10 0 1 0 10 22v-7H7v-3h3v-2.2c0-3 1.8-4.7 4.5-4.7 1.3 0 2.5.1 2.5.1v3h-1.4c-1.4 0-1.8.9-1.8 1.8V12h3l-.5 3h-2.5v7a10 10 0 0 0 8-10z"/></svg>
-      </a>
-      <a href="https://instagram.com" target="_blank" aria-label="Instagram">
-        <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 1.17.056 1.97.24 2.43.414a4.92 4.92 0 0 1 1.675 1.072 4.92 4.92 0 0 1 1.072 1.675c.174.46.358 1.26.414 2.43.058 1.266.07 1.645.07 4.85s-.012 3.584-.07 4.85c-.056 1.17-.24 1.97-.414 2.43a4.916 4.916 0 0 1-1.072 1.675 4.916 4.916 0 0 1-1.675 1.072c-.46.174-1.26.358-2.43.414-1.266.058-1.645.07-4.85.07s-3.584-.012-4.85-.07c-1.17-.056-1.97-.24-2.43-.414a4.91 4.91 0 0 1-1.675-1.072 4.91 4.91 0 0 1-1.072-1.675c-.174-.46-.358-1.26-.414-2.43C2.175 15.584 2.163 15.204 2.163 12s.012-3.584.07-4.85c.056-1.17.24-1.97.414-2.43a4.92 4.92 0 0 1 1.072-1.675 4.92 4.92 0 0 1 1.675-1.072c.46-.174 1.26-.358 2.43-.414C8.416 2.175 8.796 2.163 12 2.163zm0 3.675a6.163 6.163 0 1 0 0 12.325 6.163 6.163 0 0 0 0-12.325zm0 10.162a3.999 3.999 0 1 1 0-7.998 3.999 3.999 0 0 1 0 7.998zm6.406-11.845a1.44 1.44 0 1 0 0 2.88 1.44 1.44 0 0 0 0-2.88z"/></svg>
-      </a>
+  <div class="container">
+    <div class="radio-player">
+      <audio id="radio" crossorigin="anonymous"></audio>
+      <div class="now-playing" id="nowPlaying">Radio Online - Stopped</div>
+      <div class="spectrum" aria-hidden="true">
+        <div class="bar" style="animation-delay: 0s;"></div>
+        <div class="bar" style="animation-delay: 0.1s;"></div>
+        <div class="bar" style="animation-delay: 0.2s;"></div>
+        <div class="bar" style="animation-delay: 0.3s;"></div>
+        <div class="bar" style="animation-delay: 0.4s;"></div>
+        <div class="bar" style="animation-delay: 0.5s;"></div>
+        <div class="bar" style="animation-delay: 0.6s;"></div>
+        <div class="bar" style="animation-delay: 0.7s;"></div>
+        <div class="bar" style="animation-delay: 0.8s;"></div>
+        <div class="bar" style="animation-delay: 0.9s;"></div>
+      </div>
+      <div class="controls">
+        <button class="ctrl-btn" id="playBtn" aria-label="Play">
+          <svg viewBox="0 0 64 64">
+            <polygon points="16,12 56,32 16,52" />
+          </svg>
+        </button>
+        <button class="ctrl-btn" id="pauseBtn" aria-label="Pause">
+          <svg viewBox="0 0 64 64">
+            <rect x="16" y="12" width="10" height="40"/>
+            <rect x="38" y="12" width="10" height="40"/>
+          </svg>
+        </button>
+        <button class="ctrl-btn" id="stopBtn" aria-label="Stop">
+          <svg viewBox="0 0 64 64">
+            <rect x="16" y="16" width="32" height="32" />
+          </svg>
+        </button>
+        <button class="ctrl-btn" id="muteBtn" aria-label="Mute/Unmute">
+          <svg viewBox="0 0 64 64" id="muteIcon">
+            <polygon points="16,24 28,24 40,12 40,52 28,40 16,40" />
+          </svg>
+        </button>
+        <button class="ctrl-btn" id="volUpBtn" aria-label="Volume Up">
+          <svg viewBox="0 0 64 64">
+            <polygon points="48,32 36,20 36,44" />
+            <rect x="52" y="28" width="4" height="8" />
+          </svg>
+        </button>
+        <button class="ctrl-btn" id="volDownBtn" aria-label="Volume Down">
+          <svg viewBox="0 0 64 64">
+            <polygon points="16,32 28,20 28,44" />
+            <rect x="12" y="28" width="4" height="8" />
+          </svg>
+        </button>
+      </div>
+      <div class="social-media">
+        <a href="https://www.youtube.com/" target="_blank" rel="noopener" class="youtube" aria-label="YouTube">
+          <svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path d="M23.498 6.186a2.955 2.955 0 0 0-2.082-2.087C19.41 3.5 12 3.5 12 3.5s-7.412 0-9.418.6a2.955 2.955 0 0 0-2.08 2.087A30.001 30.001 0 0 0 0 12a30.003 30.003 0 0 0 .5 5.815 2.955 2.955 0 0 0 2.08 2.087c2.005.6 9.418.6 9.418.6s7.412 0 9.416-.6a2.955 2.955 0 0 0 2.082-2.087A29.992 29.992 0 0 0 24 12a29.996 29.996 0 0 0-.502-5.814zM9.546 15.568V8.432L15.818 12l-6.272 3.568z"/>
+          </svg>
+        </a>
+        <a href="https://www.facebook.com/" target="_blank" rel="noopener" class="facebook" aria-label="Facebook">
+          <svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path d="M22.675 0H1.325C.593 0 0 .593 0 1.326v21.348C0 23.407.593 24 1.325 24h11.495v-9.294H9.691v-3.622h3.129V8.413c0-3.1 1.893-4.788 4.658-4.788 1.325 0 2.466.099 2.797.143v3.24l-1.918.001c-1.504 0-1.796.715-1.796 1.763v2.312h3.59l-.467 3.622h-3.123V24h6.116C23.407 24 24 23.407 24 22.674V1.326C24 .593 23.407 0 22.675 0z"/>
+          </svg>
+        </a>
+        <a href="https://www.instagram.com/" target="_blank" rel="noopener" class="instagram" aria-label="Instagram">
+          <svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12 2.163c3.204 0 3.584.012 4.85.07 1.17.056 1.97.24 2.43.414a4.92 4.92 0 0 1 1.675 1.072 4.92 4.92 0 0 1 1.072 1.675c.174.46.358 1.26.414 2.43.058 1.266.07 1.645.07 4.85s-.012 3.584-.07 4.85c-.056 1.17-.24 1.97-.414 2.43a4.902 4.902 0 0 1-1.072 1.675 4.902 4.902 0 0 1-1.675 1.072c-.46.174-1.26.358-2.43.414-1.266.058-1.645.07-4.85.07s-3.584-.012-4.85-.07c-1.17-.056-1.97-.24-2.43-.414a4.92 4.92 0 0 1-1.675-1.072 4.92 4.92 0 0 1-1.072-1.675c-.174-.46-.358-1.26-.414-2.43C2.175 15.746 2.163 15.367 2.163 12s.012-3.584.07-4.85c.056-1.17.24-1.97.414-2.43a4.92 4.92 0 0 1 1.072-1.675 4.92 4.92 0 0 1 1.675-1.072c.46-.174 1.26-.358 2.43-.414C8.416 2.175 8.796 2.163 12 2.163z"/>
+          </svg>
+        </a>
+      </div>
     </div>
   </div>
-
   <script>
-    const radioURL = "https://your-stream-url-here";
-    const audio = document.getElementById('radio');
+    const radio = document.getElementById('radio');
     const playBtn = document.getElementById('playBtn');
     const pauseBtn = document.getElementById('pauseBtn');
     const stopBtn = document.getElementById('stopBtn');
@@ -155,35 +199,40 @@
     const volDownBtn = document.getElementById('volDownBtn');
     const nowPlaying = document.getElementById('nowPlaying');
 
-    audio.src = radioURL;
+    radio.src = "https://stream-url-example.com/stream";
+    radio.volume = 0.5;
 
     playBtn.addEventListener('click', () => {
-      audio.play();
-      nowPlaying.textContent = "Se ascultă radio...";
+      radio.play();
+      nowPlaying.textContent = "Radio Online - Playing";
     });
 
     pauseBtn.addEventListener('click', () => {
-      audio.pause();
-      nowPlaying.textContent = "Pauză";
+      radio.pause();
+      nowPlaying.textContent = "Radio Online - Paused";
     });
 
     stopBtn.addEventListener('click', () => {
-      audio.pause();
-      audio.currentTime = 0;
-      nowPlaying.textContent = "Oprit";
+      radio.pause();
+      radio.currentTime = 0;
+      nowPlaying.textContent = "Radio Online - Stopped";
     });
 
     muteBtn.addEventListener('click', () => {
-      audio.muted = !audio.muted;
-      nowPlaying.textContent = audio.muted ? "Sunet oprit" : "Se ascultă radio...";
+      radio.muted = !radio.muted;
+      muteBtn.classList.toggle('muted', radio.muted);
     });
 
     volUpBtn.addEventListener('click', () => {
-      if (audio.volume < 1) audio.volume = Math.min(1, audio.volume + 0.1);
+      if (radio.volume < 1) {
+        radio.volume = Math.min(1, radio.volume + 0.1);
+      }
     });
 
     volDownBtn.addEventListener('click', () => {
-      if (audio.volume > 0) audio.volume = Math.max(0, audio.volume - 0.1);
+      if (radio.volume > 0) {
+        radio.volume = Math.max(0, radio.volume - 0.1);
+      }
     });
   </script>
 </body>
