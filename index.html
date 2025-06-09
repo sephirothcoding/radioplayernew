@@ -1,311 +1,117 @@
 <!DOCTYPE html>
-<html lang="ro">
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Radio Player Sky‑Blue Theme</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Radio Player</title>
   <style>
-    * { box-sizing: border-box; margin:0; padding:0; }
     body {
       margin: 0;
-      background: #111;
+      padding: 0;
+      background: url('https://xatimg.com/image/MjrfTBrFc0sO.jpg') no-repeat center center fixed;
+      background-size: cover;
+      font-family: Arial, sans-serif;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      color: white;
+      overflow: hidden;
+    }
+
+    .player-container {
+      background: rgba(0, 0, 0, 0.6);
+      padding: 30px;
+      border-radius: 20px;
+      box-shadow: 0 0 30px rgba(255, 255, 255, 0.2);
+      text-align: center;
+      width: 350px;
+      position: relative;
+    }
+
+    .spectrum {
       display: flex;
       justify-content: center;
-      align-items: center;
-      min-height: 100vh;
-      font-family: sans-serif;
-      color: #fff;
-      overflow: hidden;
+      align-items: flex-end;
+      height: 50px; /* micșorat */
+      margin: 20px 0;
     }
-    .background {
-      position: fixed;
-      top:0; left:0;
-      width:100%; height:100%;
-      background: radial-gradient(circle at center, #112233 0%, #000 80%);
-      z-index: -1;
-      animation: bgPulse 10s ease-in-out infinite;
-    }
-    @keyframes bgPulse {
-      0%,100% { background-size: 100% 100%; }
-      50% { background-size: 110% 110%; }
-    }
-    .container {
-      width: 100%;
-      max-width: 800px;
-      aspect-ratio: 746/454;
-      background: url("https://xatimg.com/image/iytSFtTk86To.jpg") center/cover no-repeat;
-      position: relative;
-      border-radius: 10px;
-      overflow: hidden;
-      box-shadow: 0 0 30px rgba(0,0,0,0.7);
-    }
-    .radio-player { width:100%; height:100%; position:relative; }
-    audio { display: none; }
-    .now-playing {
-      position:absolute;
-      top:8%;
-      width:100%;
-      text-align:center;
-      font-size:1.3rem;
-      font-weight:bold;
-      color: #fff;
-      text-shadow: 0 0 10px rgba(135,206,250,0.8);
-      animation: textGlow 3s infinite;
-    }
-    @keyframes textGlow {
-      0%,100% { text-shadow: 0 0 10px rgba(135,206,250,0.8); }
-      50%  { text-shadow: 0 0 20px rgba(135,206,250,1); }
-    }
-    .spectrum {
-      position:absolute;
-      bottom:25%;
-      left:50%;
-      transform:translateX(-50%);
-      display:flex;
-      gap:2px;
-      align-items:end;
-      width:80%;
-      height:20%;
-    }
+
     .bar {
-      background: linear-gradient(to top, #87CEFA, #fff);
-      width:2%;
-      border-radius: 2px;
+      width: 5px;
+      height: 10px;
+      background: #00ffcc;
+      margin: 0 2px;
       animation: bounce 1s infinite ease-in-out;
     }
-    @keyframes bounce {
-      0%,100% { height:10%; }
-      50% { height:100%; }
-    }
-    .controls {
-      position:absolute;
-      bottom:8%;
-      left:50%;
-      transform:translateX(-50%);
-      display:flex;
-      gap:2vw;
-      justify-content:center;
-    }
-    .ctrl-btn {
-      width:8vw;
-      max-width:40px;
-      height:8vw;
-      max-height:40px;
-      background: none;
-      border: none;
-      cursor: pointer;
-      position: relative;
-      transition: transform 0.2s ease, filter 0.2s ease;
-    }
-    .ctrl-btn::after {
-      content: '';
-      position: absolute;
-      inset: -5px;
-      border-radius: 50%;
-      background: rgba(135,206,250,0.5);
-      opacity: 0;
-      transition: opacity 0.3s ease;
-    }
-    .ctrl-btn:hover::after {
-      opacity: 1;
-      animation: pulseCircle 1s infinite;
-    }
-    @keyframes pulseCircle {
-      0% { transform: scale(0.8); opacity: 0.7; }
-      100% { transform: scale(1.4); opacity: 0; }
-    }
-    .ctrl-btn svg {
-      width:100%;
-      height:100%;
-      fill: #87CEFA;
-    }
-    .ctrl-btn.muted svg { fill: #ADD8E6; }
-    .ctrl-btn.active svg { fill: #00BFFF; }
-    #vol-control {
-      position:absolute;
-      bottom:8%;
-      right:10%;
-      display:flex;
-      align-items:center;
-      gap:0.5rem;
-    }
-    #vol-control input[type="range"] {
-      width:120px;
-    }
-    #fullscreen-btn {
-      position:absolute;
-      top:8%;
-      right:10%;
-      background:none;
-      border:none;
-      cursor:pointer;
-      width:36px; height:36px;
-      color:#87CEFA;
-      transition: transform 0.2s ease;
-    }
-    #fullscreen-btn:hover { transform: scale(1.2); }
-    .social-media {
-      position: absolute;
-      top: 50%;
-      left: 1rem;
-      transform: translateY(-50%);
-      display: flex;
-      flex-direction: column;
-      gap: 1rem;
-      z-index: 10;
-    }
-    .social-media a {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      width: 36px;
-      height: 36px;
-      transition: transform 0.2s ease;
-    }
-    .social-media a svg {
-      width: 24px;
-      height: 24px;
-    }
-    .social-media a:hover {
-      transform: scale(1.2);
-      filter: drop-shadow(0 0 6px #87CEFA);
-    }
-    .social-media a.youtube svg { fill: #FF0000; }
-    .social-media a.facebook svg { fill: #1877F2; }
-    .social-media a.instagram svg { fill: #E1306C; }
 
-    @media(max-width:500px) {
-      .ctrl-btn { width:10vw; height:10vw; }
-      .now-playing { font-size:1rem; }
-      #vol-control input[type="range"] { width:80px; }
+    .bar:nth-child(2) { animation-delay: 0.1s; }
+    .bar:nth-child(3) { animation-delay: 0.2s; }
+    .bar:nth-child(4) { animation-delay: 0.3s; }
+    .bar:nth-child(5) { animation-delay: 0.4s; }
+
+    @keyframes bounce {
+      0%, 100% { height: 10px; }
+      50% { height: 50px; }
+    }
+
+    .controls {
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      margin-top: 10px;
+    }
+
+    .btn {
+      background: #00ffcc;
+      border: none;
+      border-radius: 10px;
+      color: #000;
+      padding: 10px 15px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    .btn:hover {
+      background: #00bfa6;
+    }
+
+    .now-playing {
+      font-size: 16px;
+      margin-bottom: 10px;
     }
   </style>
 </head>
 <body>
-  <div class="background"></div>
-  <div class="container">
-    <div class="radio-player">
-      <audio id="radio" crossorigin="anonymous"></audio>
+  <div class="player-container">
+    <div class="now-playing" id="nowPlaying">Radio Live 🎶</div>
+    
+    <div class="spectrum">
+      <div class="bar"></div>
+      <div class="bar"></div>
+      <div class="bar"></div>
+      <div class="bar"></div>
+      <div class="bar"></div>
+    </div>
 
-      <div class="social-media">
-        <!-- păstrăm social media -->
-        <a href="https://www.youtube.com/" target="_blank" class="youtube" aria-label="YouTube">
-          <svg role="img" viewBox="0 0 24 24"><path d="M23.498..."/></svg>
-        </a>
-        <a href="https://www.facebook.com/" target="_blank" class="facebook" aria-label="Facebook">
-          <svg role="img" viewBox="0 0 24 24"><path d="M22.675..."/></svg>
-        </a>
-        <a href="https://www.instagram.com/" target="_blank" class="instagram" aria-label="Instagram">
-          <svg role="img" viewBox="0 0 24 24"><path d="M12..."/></svg>
-        </a>
-      </div>
+    <audio id="audioPlayer" src="https://asculta.radio/stream.mp3" autoplay></audio>
 
-      <div class="now-playing" id="nowPlaying">Conectare la stream...</div>
-      <div class="spectrum" id="spectrum"></div>
-
-      <div class="controls">
-        <button class="ctrl-btn" id="btn-play" aria-label="Play">
-          <svg viewBox="0 0 64 64"><polygon points="16,8 56,32 16,56"/></svg>
-        </button>
-        <button class="ctrl-btn" id="btn-pause" aria-label="Pause">
-          <svg viewBox="0 0 64 64"><rect x="16" y="8" width="12" height="48"/><rect x="36" y="8" width="12" height="48"/></svg>
-        </button>
-        <button class="ctrl-btn" id="btn-stop" aria-label="Stop">
-          <svg viewBox="0 0 64 64"><rect x="16" y="16" width="32" height="32"/></svg>
-        </button>
-        <button class="ctrl-btn" id="btn-mute" aria-label="Mute/Unmute">
-          <svg viewBox="0 0 64 64"><polygon points="8,24 24,24 36,12 36,52 24,40 8,40"/><line x1="42" y1="22" x2="56" y2="42" stroke="#fff" stroke-width="4"/><line x1="56" y1="22" x2="42" y2="42" stroke="#fff" stroke-width="4"/></svg>
-        </button>
-        <button class="ctrl-btn" id="btn-vol-down" aria-label="Volume down">
-          <svg viewBox="0 0 64 64"><polygon points="8,24 24,24 36,12 36,52 24,40 8,40"/><path d="M44 26 L52 26" stroke="#fff" stroke-width="4"/></svg>
-        </button>
-        <button class="ctrl-btn" id="btn-vol-up" aria-label="Volume up">
-          <svg viewBox="0 0 64 64"><polygon points="8,24 24,24 36,12 36,52 24,40 8,40"/><path d="M44 24 C48 28,48 36,44 40" stroke="#fff" stroke-width="4"/></svg>
-        </button>
-      </div>
-
-      <div id="vol-control">
-        🔊<input type="range" id="volumeSlider" min="0" max="1" step="0.01" />
-      </div>
-
-      <button id="fullscreen-btn" aria-label="Full Screen">⛶</button>
+    <div class="controls">
+      <button class="btn" onclick="changeVolume(-0.1)">Volum -</button>
+      <button class="btn" onclick="changeVolume(0.1)">Volum +</button>
     </div>
   </div>
 
   <script>
-    const audio = document.getElementById("radio");
-    const now = document.getElementById("nowPlaying");
-    const barsContainer = document.getElementById("spectrum");
-    const volumeSlider = document.getElementById("volumeSlider");
-    const fsBtn = document.getElementById("fullscreen-btn");
-    const ctx = new (window.AudioContext ?? window.webkitAudioContext)();
-    const analyser = ctx.createAnalyser();
-    analyser.fftSize = 64;
-    const bufferLength = analyser.frequencyBinCount;
-    const dataArray = new Uint8Array(bufferLength);
-    const source = ctx.createMediaElementSource(audio);
-    source.connect(analyser);
-    analyser.connect(ctx.destination);
+    const audio = document.getElementById('audioPlayer');
 
-    for (let i = 0; i < bufferLength; i++) {
-      const bar = document.createElement("div");
-      bar.classList.add("bar");
-      bar.style.animationDelay = `${(i / bufferLength) * 500}ms`;
-      barsContainer.appendChild(bar);
+    function changeVolume(delta) {
+      let newVolume = audio.volume + delta;
+      if (newVolume > 1) newVolume = 1;
+      if (newVolume < 0) newVolume = 0;
+      audio.volume = newVolume;
     }
-    const bars = barsContainer.children;
-    (function animate() {
-      analyser.getByteFrequencyData(dataArray);
-      for (let i = 0; i < bars.length; i++) {
-        bars[i].style.height = `${(dataArray[i] / 255) * 100}%`;
-      }
-      requestAnimationFrame(animate);
-    })();
-
-    function fetchTitle() {
-      now.textContent = "Sky‑Blue Radio Live 🎧";
-    }
-    fetchTitle();
-    setInterval(fetchTitle, 10000);
-
-    audio.src = "https://boxstream.danceradiouk.com/stream/1/";
-    volumeSlider.value = audio.volume;
-
-    document.getElementById("btn-play").onclick = () => {
-      audio.play().then(() => ctx.resume());
-    };
-    document.getElementById("btn-pause").onclick = () => audio.pause();
-    document.getElementById("btn-stop").onclick = () => {
-      audio.pause();
-      audio.currentTime = 0;
-    };
-
-    const muteBtn = document.getElementById("btn-mute");
-    muteBtn.onclick = () => {
-      audio.muted = !audio.muted;
-      muteBtn.classList.toggle("muted", audio.muted);
-    };
-
-    document.getElementById("btn-vol-up").onclick = () => {
-      audio.volume = Math.min(1, audio.volume + 0.1);
-      volumeSlider.value = audio.volume;
-    };
-    document.getElementById("btn-vol-down").onclick = () => {
-      audio.volume = Math.max(0, audio.volume - 0.1);
-      volumeSlider.value = audio.volume;
-    };
-
-    volumeSlider.oninput = () => {
-      audio.volume = volumeSlider.value;
-    };
-
-    fsBtn.onclick = () => {
-      const e = document.documentElement;
-      if (!document.fullscreenElement) {
-        e.requestFullscreen?.() || e.webkitRequestFullscreen?.();
-      } else {
-        document.exitFullscreen?.();
-      }
-    };
   </script>
 </body>
 </html>
