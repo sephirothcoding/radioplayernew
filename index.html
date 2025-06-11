@@ -81,6 +81,8 @@
       display: flex;
       gap: 1rem;
       z-index: 10;
+      flex-direction: column;
+      align-items: center;
     }
     .social-media a {
       display: flex;
@@ -101,6 +103,14 @@
       filter: drop-shadow(0 0 6px skyblue);
     }
     /* Removed svg fill colors since now using PNG */
+
+    .social-media-title {
+      margin-top: 8px;
+      font-size: 1rem;
+      color: skyblue;
+      font-weight: bold;
+      user-select: none;
+    }
 
     @keyframes hoverPulse {
       0% { transform: scale(1.0); filter: drop-shadow(0 0 4px skyblue); }
@@ -175,6 +185,7 @@
         <a href="https://www.instagram.com/" target="_blank" rel="noopener" class="instagram" aria-label="Instagram">
           <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e7/Instagram_logo_2016.svg/24px-Instagram_logo_2016.svg.png" alt="Instagram"/>
         </a>
+        <div class="social-media-title">Radio</div>
       </div>
     </div>
   </div>
