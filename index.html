@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Skyblue Radio Player</title>
   <style>
     * { box-sizing: border-box; }
@@ -90,18 +90,17 @@
       height: 36px;
       transition: transform 0.2s ease;
     }
-    .social-media a svg {
+    .social-media a img {
       width: 24px;
       height: 24px;
+      object-fit: contain;
     }
     .social-media a:hover {
       animation: hoverPulse 0.6s infinite alternate;
       transform: scale(1.2);
       filter: drop-shadow(0 0 6px skyblue);
     }
-    .social-media a.youtube svg { fill: #FF0000; }
-    .social-media a.facebook svg { fill: #1877F2; }
-    .social-media a.instagram svg { fill: #E1306C; }
+    /* Removed svg fill colors since now using PNG */
 
     @keyframes hoverPulse {
       0% { transform: scale(1.0); filter: drop-shadow(0 0 4px skyblue); }
@@ -168,19 +167,13 @@
       </div>
       <div class="social-media">
         <a href="https://www.youtube.com/" target="_blank" rel="noopener" class="youtube" aria-label="YouTube">
-          <svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-            <path d="M23.498 6.186a2.955 2.955 0 0 0-2.082-2.087C19.41 3.5 12 3.5 12 3.5s-7.412 0-9.418.6a2.955 2.955 0 0 0-2.08 2.087A30.001 30.001 0 0 0 0 12a30.003 30.003 0 0 0 .5 5.815 2.955 2.955 0 0 0 2.08 2.087c2.005.6 9.418.6 9.418.6s7.412 0 9.416-.6a2.955 2.955 0 0 0 2.082-2.087A29.992 29.992 0 0 0 24 12a29.996 29.996 0 0 0-.502-5.814zM9.546 15.568V8.432L15.818 12l-6.272 3.568z"/>
-          </svg>
+          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b8/YouTube_Logo_2017.svg/24px-YouTube_Logo_2017.svg.png" alt="YouTube"/>
         </a>
         <a href="https://www.facebook.com/profile.php?id=61566250783026" target="_blank" rel="noopener" class="facebook" aria-label="Facebook">
-          <svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-            <path d="M22.675 0H1.325C.593 0 0 .593 0 1.326v21.348C0 23.407.593 24 1.325 24h11.495v-9.294H9.691v-3.622h3.129V8.413c0-3.1 1.893-4.788 4.658-4.788 1.325 0 2.466.099 2.797.143v3.24l-1.918.001c-1.504 0-1.796.715-1.796 1.763v2.312h3.59l-.467 3.622h-3.123V24h6.116C23.407 24 24 23.407 24 22.674V1.326C24 .593 23.407 0 22.675 0z"/>
-          </svg>
+          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c2/F_icon.svg/24px-F_icon.svg.png" alt="Facebook"/>
         </a>
         <a href="https://www.instagram.com/" target="_blank" rel="noopener" class="instagram" aria-label="Instagram">
-          <svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-            <path d="M12 2.163c3.204 0 3.584.012 4.85.07 1.17.056 1.97.24 2.43.414a4.92 4.92 0 0 1 1.675 1.072 4.92 4.92 0 0 1 1.072 1.675c.174.46.358 1.26.414 2.43.058 1.266.07 1.645.07 4.85s-.012 3.584-.07 4.85c-.056 1.17-.24 1.97-.414 2.43a4.902 4.902 0 0 1-1.072 1.675 4.902 4.902 0 0 1-1.675 1.072c-.46.174-1.26.358-2.43.414-1.266.058-1.645.07-4.85.07s-3.584-.012-4.85-.07c-1.17-.056-1.97-.24-2.43-.414a4.92 4.92 0 0 1-1.675-1.072 4.92 4.92 0 0 1-1.072-1.675c-.174-.46-.358-1.26-.414-2.43C2.175 15.746 2.163 15.367 2.163 12s.012-3.584.07-4.85c.056-1.17.24-1.97.414-2.43a4.92 4.92 0 0 1 1.072-1.675 4.92 4.92 0 0 1 1.675-1.072c.46-.174 1.26-.358 2.43-.414C8.416 2.175 8.796 2.163 12 2.163z"/>
-          </svg>
+          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e7/Instagram_logo_2016.svg/24px-Instagram_logo_2016.svg.png" alt="Instagram"/>
         </a>
       </div>
     </div>
