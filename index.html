@@ -21,11 +21,11 @@
     }
     .radio-player { width:100%; height:100%; position:relative; }
     audio { display: none; }
-    
+
     .now-playing {
       position: absolute;
       top: 8%;
-      left: calc(50% - 60px); /* 20px mai la stânga față de centru */
+      left: calc(50% - 60px); /* 20px mai la stânga */
       transform: translateX(-50%);
       text-align: center;
       font-size: 1.2rem;
@@ -36,36 +36,62 @@
 
     .social-media {
       position: absolute;
-      top: 16%; /* Mai jos sub titlu */
-      left: 58%; /* Mai la dreapta */
+      top: 16%;
+      left: 58%;
       transform: translateX(-50%);
       display: flex;
       gap: 1rem;
       z-index: 10;
     }
-
     .social-media a {
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      display: inline-block;
       width: 36px;
       height: 36px;
       transition: transform 0.2s ease;
       background-color: #0008;
       border-radius: 50%;
+      overflow: hidden;
     }
-    .social-media a svg {
-      width: 24px;
-      height: 24px;
+    .social-media a img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
     }
     .social-media a:hover {
       animation: hoverPulse 0.6s infinite alternate;
       transform: scale(1.2);
       filter: drop-shadow(0 0 6px skyblue);
     }
-    .social-media a.youtube svg { fill: #FF0000; }
-    .social-media a.facebook svg { fill: #1877F2; }
-    .social-media a.instagram svg { fill: #E1306C; }
+
+    .controls {
+      position:absolute; bottom:8%; left:50%;
+      transform:translateX(-50%);
+      display:flex; gap:2.5vw;
+      justify-content: center;
+      align-items: center;
+    }
+    .ctrl-btn {
+      width:10vw; max-width:50px;
+      height:10vw; max-height:50px;
+      background:none; border: 2px solid skyblue;
+      border-radius: 12px;
+      cursor:pointer;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      display: flex; justify-content: center; align-items: center;
+      filter: drop-shadow(0 0 3px skyblue);
+    }
+    .ctrl-btn:hover {
+      animation: hoverPulse 0.7s infinite alternate;
+      transform: scale(1.3);
+      box-shadow: 0 0 12px 4px skyblue;
+      filter: drop-shadow(0 0 10px skyblue);
+    }
+    .ctrl-btn svg {
+      width: 60%; height: 60%;
+      fill: skyblue;
+      transition: fill 0.3s ease;
+    }
+    .ctrl-btn.muted svg { fill: #66ccff; }
 
     .spectrum {
       position:absolute; bottom:25%;
@@ -83,44 +109,12 @@
       0%,100% { height:10%; }
       50% { height:100%; }
     }
-    .controls {
-      position:absolute; bottom:8%; left:50%;
-      transform:translateX(-50%);
-      display:flex; gap:2.5vw; justify-content:center;
-      align-items: center;
-    }
-    .ctrl-btn {
-      width:10vw; max-width:50px;
-      height:10vw; max-height:50px;
-      background:none; border: 2px solid skyblue;
-      border-radius: 12px;
-      cursor:pointer;
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      filter: drop-shadow(0 0 3px skyblue);
-    }
-    .ctrl-btn:hover {
-      animation: hoverPulse 0.7s infinite alternate;
-      transform: scale(1.3);
-      box-shadow: 0 0 12px 4px skyblue;
-      filter: drop-shadow(0 0 10px skyblue);
-    }
-    .ctrl-btn svg {
-      width: 60%; height: 60%;
-      fill: skyblue;
-      transition: fill 0.3s ease;
-    }
-    .ctrl-btn.muted svg { fill:#66ccff; }
-
     @keyframes hoverPulse {
       0% { transform: scale(1.0); filter: drop-shadow(0 0 4px skyblue); }
       100% { transform: scale(1.3); filter: drop-shadow(0 0 15px skyblue); }
     }
-
     @media(max-width:500px) {
-      .ctrl-btn { width:15vw; height:15vw; max-width:none; max-height:none; }
+      .ctrl-btn { width:15vw; height:15vw; }
       .now-playing { font-size:1rem; }
     }
   </style>
@@ -129,26 +123,57 @@
   <div class="container">
     <div class="radio-player">
       <audio id="radio" crossorigin="anonymous" src="https://s2.radio.co/s0b5f0f9d8/listen"></audio>
+
       <div class="now-playing" id="nowPlaying">Skyblue Radio</div>
 
       <div class="social-media">
-        <a href="https://www.youtube.com/" target="_blank" rel="noopener" class="youtube" aria-label="YouTube">
-          <svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-            <path d="M23.498 6.186a2.955 2.955 0 0 0-2.082-2.087C19.41 3.5 12 3.5 12 3.5s-7.412 0-9.418.6a2.955 2.955 0 0 0-2.08 2.087A30.001 30.001 0 0 0 0 12a30.003 30.003 0 0 0 .5 5.815 2.955 2.955 0 0 0 2.08 2.087c2.005.6 9.418.6 9.418.6s7.412 0 9.416-.6a2.955 2.955 0 0 0 2.082-2.087A29.992 29.992 0 0 0 24 12a29.996 29.996 0 0 0-.502-5.814zM9.546 15.568V8.432L15.818 12l-6.272 3.568z"/>
-          </svg>
+        <a href="https://www.youtube.com/" target="_blank" rel="noopener" aria-label="YouTube">
+          <img src="https://freepnglogo.com/wp-content/uploads/2024/02/youtube-logo-png-transparent-5.png" alt="YouTube">
         </a>
-        <a href="https://www.facebook.com/profile.php?id=61566250783026" target="_blank" rel="noopener" class="facebook" aria-label="Facebook">
-          <svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-            <path d="M22.675 0H1.325C.593 0 0 .593 0 1.326v21.348C0 23.407.593 24 1.325 24h11.495v-9.294H9.691v-3.622h3.129V8.413c0-3.1 1.893-4.788 4.658-4.788 1.325 0 2.466.099 2.797.143v3.24l-1.918.001c-1.504 0-1.796.715-1.796 1.763v2.312h3.59l-.467 3.622h-3.123V24h6.116C23.407 24 24 23.407 24 22.674V1.326C24 .593 23.407 0 22.675 0z"/>
-          </svg>
+        <a href="https://www.facebook.com/profile.php?id=61566250783026" target="_blank" rel="noopener" aria-label="Facebook">
+          <img src="https://pngimg.com/uploads/facebook_logos/facebook_logos_PNG19757.png" alt="Facebook">
         </a>
-        <a href="https://www.instagram.com/" target="_blank" rel="noopener" class="instagram" aria-label="Instagram">
-          <svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-            <path d="M12 2.163c3.204 0 3.584.012 4.85.07 1.17.056 1.97.24 2.43.414a4.92 4.92 0 0 1 1.675 1.072 4.92 4.92 0 0 1 1.072 1.675c.174.46.358 1.26.414 2.43.058 1.266.07 1.645.07 4.85s-.012 3.584-.07 4.85c-.056 1.17-.24 1.97-.414 2.43a4.902 4.902 0 0 1-1.072 1.675 4.902 4.902 0 0 1-1.675 1.072c-.46.174-1.26.358-2.43.414-1.266.058-1.645.07-4.85.07s-3.584-.012-4.85-.07c-1.17-.056-1.97-.24-2.43-.414a4.92 4.92 0 0 1-1.675-1.072 4.92 4.92 0 0 1-1.072-1.675c-.174-.46-.358-1.26-.414-2.43C2.175 15.746 2.163 15.367 2.163 12s.012-3.584.07-4.85c.056-1.17.24-1.97.414-2.43a4.92 4.92 0 0 1 1.072-1.675 4.92 4.92 0 0 1 1.675-1.072c.46-.174 1.26-.358 2.43-.414C8.416 2.175 8.796 2.163 12 2.163z"/>
-          </svg>
+        <a href="https://www.instagram.com/" target="_blank" rel="noopener" aria-label="Instagram">
+          <img src="https://freepnglogo.com/wp-content/uploads/2019/02/instagram-logo-png-transparent-9.png" alt="Instagram">
         </a>
+      </div>
+
+      <div class="controls">
+        <button id="playPauseBtn" class="ctrl-btn" title="Play/Pause">
+          <svg viewBox="0 0 64 64"><polygon points="16,0 64,32 16,64"/></svg>
+        </button>
+        <button id="muteBtn" class="ctrl-btn" title="Mute/Unmute">
+          <svg viewBox="0 0 64 64"><path d="M16 24v16h12l16 16V8L28 24H16z"/></svg>
+        </button>
+      </div>
+
+      <div class="spectrum">
+        <!-- 20 bare animate -->
+        ${[...Array(20)].map((_, i) => `<div class="bar" style="animation-delay:${i*0.1}s;"></div>`).join('')}
       </div>
     </div>
   </div>
+
+  <script>
+    const audio = document.getElementById("radio");
+    const playPauseBtn = document.getElementById("playPauseBtn");
+    const muteBtn = document.getElementById("muteBtn");
+
+    let isPlaying = false;
+
+    playPauseBtn.addEventListener("click", () => {
+      if (isPlaying) {
+        audio.pause();
+      } else {
+        audio.play().catch(console.error);
+      }
+      isPlaying = !isPlaying;
+    });
+
+    muteBtn.addEventListener("click", () => {
+      audio.muted = !audio.muted;
+      muteBtn.classList.toggle("muted", audio.muted);
+    });
+  </script>
 </body>
 </html>
