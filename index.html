@@ -81,8 +81,10 @@
       display: flex;
       gap: 1rem;
       z-index: 10;
-      flex-direction: column;
+      flex-direction: row; /* as original, horizontal */
       align-items: center;
+      flex-wrap: nowrap;
+      flex-shrink: 0;
     }
     .social-media a {
       display: flex;
@@ -104,11 +106,15 @@
     }
     /* Removed svg fill colors since now using PNG */
 
+    /* Added style for the radio title below social media */
     .social-media-title {
-      margin-top: 8px;
-      font-size: 1rem;
+      position: absolute;
+      bottom: 42%; /* slightly below social media icons */
+      right: 10%;
       color: skyblue;
       font-weight: bold;
+      font-size: 1rem;
+      text-shadow: 0 0 5px rgba(135, 206, 250, 0.7);
       user-select: none;
     }
 
@@ -185,8 +191,8 @@
         <a href="https://www.instagram.com/" target="_blank" rel="noopener" class="instagram" aria-label="Instagram">
           <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e7/Instagram_logo_2016.svg/24px-Instagram_logo_2016.svg.png" alt="Instagram"/>
         </a>
-        <div class="social-media-title">Radio</div>
       </div>
+      <div class="social-media-title">Radio</div>
     </div>
   </div>
   <script>
