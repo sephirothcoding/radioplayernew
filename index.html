@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Skyblue Radio Player</title>
   <style>
     * { box-sizing: border-box; }
@@ -77,10 +77,12 @@
     .social-media {
       position: absolute;
       bottom: 54%;
-      right: 15%;
+      right: calc(15% - 25px); /* Mutat 25px mai la dreapta */
       display: flex;
       gap: 1rem;
       z-index: 10;
+      flex-direction: column;
+      align-items: center;
     }
     .social-media a {
       display: flex;
@@ -103,10 +105,19 @@
     .social-media a.facebook svg { fill: #1877F2; }
     .social-media a.instagram svg { fill: #E1306C; }
 
+    .radio-name {
+      margin-top: 8px;
+      font-size: 1rem;
+      color: #fff;
+      text-shadow: 0 0 6px skyblue;
+      font-weight: bold;
+    }
+
     @keyframes hoverPulse {
       0% { transform: scale(1.0); filter: drop-shadow(0 0 4px skyblue); }
       100% { transform: scale(1.3); filter: drop-shadow(0 0 15px skyblue); }
     }
+
     @media(max-width:500px) {
       .ctrl-btn { width:15vw; height:15vw; max-width:none; max-height:none; }
       .now-playing { font-size:1rem; }
@@ -119,72 +130,45 @@
       <audio id="radio" crossorigin="anonymous"></audio>
       <div class="now-playing" id="nowPlaying">Radio Online - Stopped</div>
       <div class="spectrum" aria-hidden="true">
-        <div class="bar" style="animation-delay: 0s;"></div>
-        <div class="bar" style="animation-delay: 0.1s;"></div>
-        <div class="bar" style="animation-delay: 0.2s;"></div>
-        <div class="bar" style="animation-delay: 0.3s;"></div>
-        <div class="bar" style="animation-delay: 0.4s;"></div>
-        <div class="bar" style="animation-delay: 0.5s;"></div>
-        <div class="bar" style="animation-delay: 0.6s;"></div>
-        <div class="bar" style="animation-delay: 0.7s;"></div>
-        <div class="bar" style="animation-delay: 0.8s;"></div>
-        <div class="bar" style="animation-delay: 0.9s;"></div>
+        <!-- Bars -->
+        ${[...Array(10)].map((_, i) => `<div class="bar" style="animation-delay: ${i * 0.1}s;"></div>`).join("")}
       </div>
       <div class="controls">
         <button class="ctrl-btn" id="playBtn" aria-label="Play">
-          <svg viewBox="0 0 64 64">
-            <polygon points="16,12 56,32 16,52" />
-          </svg>
+          <svg viewBox="0 0 64 64"><polygon points="16,12 56,32 16,52" /></svg>
         </button>
         <button class="ctrl-btn" id="pauseBtn" aria-label="Pause">
-          <svg viewBox="0 0 64 64">
-            <rect x="16" y="12" width="10" height="40"/>
-            <rect x="38" y="12" width="10" height="40"/>
-          </svg>
+          <svg viewBox="0 0 64 64"><rect x="16" y="12" width="10" height="40"/><rect x="38" y="12" width="10" height="40"/></svg>
         </button>
         <button class="ctrl-btn" id="stopBtn" aria-label="Stop">
-          <svg viewBox="0 0 64 64">
-            <rect x="16" y="16" width="32" height="32" />
-          </svg>
+          <svg viewBox="0 0 64 64"><rect x="16" y="16" width="32" height="32" /></svg>
         </button>
         <button class="ctrl-btn" id="muteBtn" aria-label="Mute/Unmute">
-          <svg viewBox="0 0 64 64" id="muteIcon">
-            <polygon points="16,24 28,24 40,12 40,52 28,40 16,40" />
-          </svg>
+          <svg viewBox="0 0 64 64"><polygon points="16,24 28,24 40,12 40,52 28,40 16,40" /></svg>
         </button>
         <button class="ctrl-btn" id="volUpBtn" aria-label="Volume Up">
-          <svg viewBox="0 0 64 64">
-            <polygon points="48,32 36,20 36,44" />
-            <rect x="52" y="28" width="4" height="8" />
-          </svg>
+          <svg viewBox="0 0 64 64"><polygon points="48,32 36,20 36,44" /><rect x="52" y="28" width="4" height="8" /></svg>
         </button>
         <button class="ctrl-btn" id="volDownBtn" aria-label="Volume Down">
-          <svg viewBox="0 0 64 64">
-            <polygon points="16,32 28,20 28,44" />
-            <rect x="12" y="28" width="4" height="8" />
-          </svg>
+          <svg viewBox="0 0 64 64"><polygon points="16,32 28,20 28,44" /><rect x="12" y="28" width="4" height="8" /></svg>
         </button>
         <div id="volumeDisplay" style="margin-left: 10px; font-size: 0.9rem; color: skyblue;"></div>
       </div>
       <div class="social-media">
         <a href="https://www.youtube.com/" target="_blank" rel="noopener" class="youtube" aria-label="YouTube">
-          <svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-            <path d="M23.498 6.186a2.955 2.955 0 0 0-2.082-2.087C19.41 3.5 12 3.5 12 3.5s-7.412 0-9.418.6a2.955 2.955 0 0 0-2.08 2.087A30.001 30.001 0 0 0 0 12a30.003 30.003 0 0 0 .5 5.815 2.955 2.955 0 0 0 2.08 2.087c2.005.6 9.418.6 9.418.6s7.412 0 9.416-.6a2.955 2.955 0 0 0 2.082-2.087A29.992 29.992 0 0 0 24 12a29.996 29.996 0 0 0-.502-5.814zM9.546 15.568V8.432L15.818 12l-6.272 3.568z"/>
-          </svg>
+          <svg role="img" viewBox="0 0 24 24"><path d="M23.498 6.186a2.955..."/></svg>
         </a>
         <a href="https://www.facebook.com/profile.php?id=61566250783026" target="_blank" rel="noopener" class="facebook" aria-label="Facebook">
-          <svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-            <path d="M22.675 0H1.325C.593 0 0 .593 0 1.326v21.348C0 23.407.593 24 1.325 24h11.495v-9.294H9.691v-3.622h3.129V8.413c0-3.1 1.893-4.788 4.658-4.788 1.325 0 2.466.099 2.797.143v3.24l-1.918.001c-1.504 0-1.796.715-1.796 1.763v2.312h3.59l-.467 3.622h-3.123V24h6.116C23.407 24 24 23.407 24 22.674V1.326C24 .593 23.407 0 22.675 0z"/>
-          </svg>
+          <svg role="img" viewBox="0 0 24 24"><path d="M22.675 0H1.325C..."/></svg>
         </a>
         <a href="https://www.instagram.com/" target="_blank" rel="noopener" class="instagram" aria-label="Instagram">
-          <svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-            <path d="M12 2.163c3.204 0 3.584.012 4.85.07 1.17.056 1.97.24 2.43.414a4.92 4.92 0 0 1 1.675 1.072 4.92 4.92 0 0 1 1.072 1.675c.174.46.358 1.26.414 2.43.058 1.266.07 1.645.07 4.85s-.012 3.584-.07 4.85c-.056 1.17-.24 1.97-.414 2.43a4.902 4.902 0 0 1-1.072 1.675 4.902 4.902 0 0 1-1.675 1.072c-.46.174-1.26.358-2.43.414-1.266.058-1.645.07-4.85.07s-3.584-.012-4.85-.07c-1.17-.056-1.97-.24-2.43-.414a4.92 4.92 0 0 1-1.675-1.072 4.92 4.92 0 0 1-1.072-1.675c-.174-.46-.358-1.26-.414-2.43C2.175 15.746 2.163 15.367 2.163 12s.012-3.584.07-4.85c.056-1.17.24-1.97.414-2.43a4.92 4.92 0 0 1 1.072-1.675 4.92 4.92 0 0 1 1.675-1.072c.46-.174 1.26-.358 2.43-.414C8.416 2.175 8.796 2.163 12 2.163z"/>
-          </svg>
+          <svg role="img" viewBox="0 0 24 24"><path d="M12 2.163c3.204..."/></svg>
         </a>
+        <div class="radio-name">Skyblue Radio</div>
       </div>
     </div>
   </div>
+
   <script>
     const radio = document.getElementById('radio');
     const playBtn = document.getElementById('playBtn');
@@ -200,7 +184,7 @@
     radio.volume = 0.5;
 
     function updateVolumeDisplay() {
-      volumeDisplay.textContent = `Volume: ${(radio.volume * 100).toFixed(0)}%`;
+      volumeDisplay.textContent = "Volume: " + (radio.volume * 100).toFixed(0) + "%";
     }
 
     playBtn.addEventListener('click', () => {
