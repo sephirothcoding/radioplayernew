@@ -76,13 +76,14 @@
 
     .social-media {
       position: absolute;
-      bottom: 54%;
-      right: calc(15% - 25px); /* Mutat 25px mai la dreapta */
+      top: 50%;
+      right: calc(15% - 25px);
+      transform: translateY(-50%);
       display: flex;
-      gap: 1rem;
-      z-index: 10;
       flex-direction: column;
       align-items: center;
+      gap: 1rem;
+      z-index: 10;
     }
     .social-media a {
       display: flex;
@@ -117,7 +118,6 @@
       0% { transform: scale(1.0); filter: drop-shadow(0 0 4px skyblue); }
       100% { transform: scale(1.3); filter: drop-shadow(0 0 15px skyblue); }
     }
-
     @media(max-width:500px) {
       .ctrl-btn { width:15vw; height:15vw; max-width:none; max-height:none; }
       .now-playing { font-size:1rem; }
@@ -130,33 +130,29 @@
       <audio id="radio" crossorigin="anonymous"></audio>
       <div class="now-playing" id="nowPlaying">Radio Online - Stopped</div>
       <div class="spectrum" aria-hidden="true">
-        <!-- Bars -->
-        ${[...Array(10)].map((_, i) => `<div class="bar" style="animation-delay: ${i * 0.1}s;"></div>`).join("")}
+        <div class="bar" style="animation-delay: 0s;"></div>
+        <div class="bar" style="animation-delay: 0.1s;"></div>
+        <div class="bar" style="animation-delay: 0.2s;"></div>
+        <div class="bar" style="animation-delay: 0.3s;"></div>
+        <div class="bar" style="animation-delay: 0.4s;"></div>
+        <div class="bar" style="animation-delay: 0.5s;"></div>
+        <div class="bar" style="animation-delay: 0.6s;"></div>
+        <div class="bar" style="animation-delay: 0.7s;"></div>
+        <div class="bar" style="animation-delay: 0.8s;"></div>
+        <div class="bar" style="animation-delay: 0.9s;"></div>
       </div>
       <div class="controls">
-        <button class="ctrl-btn" id="playBtn" aria-label="Play">
-          <svg viewBox="0 0 64 64"><polygon points="16,12 56,32 16,52" /></svg>
-        </button>
-        <button class="ctrl-btn" id="pauseBtn" aria-label="Pause">
-          <svg viewBox="0 0 64 64"><rect x="16" y="12" width="10" height="40"/><rect x="38" y="12" width="10" height="40"/></svg>
-        </button>
-        <button class="ctrl-btn" id="stopBtn" aria-label="Stop">
-          <svg viewBox="0 0 64 64"><rect x="16" y="16" width="32" height="32" /></svg>
-        </button>
-        <button class="ctrl-btn" id="muteBtn" aria-label="Mute/Unmute">
-          <svg viewBox="0 0 64 64"><polygon points="16,24 28,24 40,12 40,52 28,40 16,40" /></svg>
-        </button>
-        <button class="ctrl-btn" id="volUpBtn" aria-label="Volume Up">
-          <svg viewBox="0 0 64 64"><polygon points="48,32 36,20 36,44" /><rect x="52" y="28" width="4" height="8" /></svg>
-        </button>
-        <button class="ctrl-btn" id="volDownBtn" aria-label="Volume Down">
-          <svg viewBox="0 0 64 64"><polygon points="16,32 28,20 28,44" /><rect x="12" y="28" width="4" height="8" /></svg>
-        </button>
+        <button class="ctrl-btn" id="playBtn" aria-label="Play"><svg viewBox="0 0 64 64"><polygon points="16,12 56,32 16,52"/></svg></button>
+        <button class="ctrl-btn" id="pauseBtn" aria-label="Pause"><svg viewBox="0 0 64 64"><rect x="16" y="12" width="10" height="40"/><rect x="38" y="12" width="10" height="40"/></svg></button>
+        <button class="ctrl-btn" id="stopBtn" aria-label="Stop"><svg viewBox="0 0 64 64"><rect x="16" y="16" width="32" height="32"/></svg></button>
+        <button class="ctrl-btn" id="muteBtn" aria-label="Mute/Unmute"><svg viewBox="0 0 64 64" id="muteIcon"><polygon points="16,24 28,24 40,12 40,52 28,40 16,40"/></svg></button>
+        <button class="ctrl-btn" id="volUpBtn" aria-label="Volume Up"><svg viewBox="0 0 64 64"><polygon points="48,32 36,20 36,44"/><rect x="52" y="28" width="4" height="8"/></svg></button>
+        <button class="ctrl-btn" id="volDownBtn" aria-label="Volume Down"><svg viewBox="0 0 64 64"><polygon points="16,32 28,20 28,44"/><rect x="12" y="28" width="4" height="8"/></svg></button>
         <div id="volumeDisplay" style="margin-left: 10px; font-size: 0.9rem; color: skyblue;"></div>
       </div>
       <div class="social-media">
         <a href="https://www.youtube.com/" target="_blank" rel="noopener" class="youtube" aria-label="YouTube">
-          <svg role="img" viewBox="0 0 24 24"><path d="M23.498 6.186a2.955..."/></svg>
+          <svg role="img" viewBox="0 0 24 24"><path d="M23.498 6.186a2.955 2.955..."/></svg>
         </a>
         <a href="https://www.facebook.com/profile.php?id=61566250783026" target="_blank" rel="noopener" class="facebook" aria-label="Facebook">
           <svg role="img" viewBox="0 0 24 24"><path d="M22.675 0H1.325C..."/></svg>
@@ -168,7 +164,6 @@
       </div>
     </div>
   </div>
-
   <script>
     const radio = document.getElementById('radio');
     const playBtn = document.getElementById('playBtn');
@@ -184,7 +179,7 @@
     radio.volume = 0.5;
 
     function updateVolumeDisplay() {
-      volumeDisplay.textContent = "Volume: " + (radio.volume * 100).toFixed(0) + "%";
+      volumeDisplay.textContent = `Volume: ${(radio.volume * 100).toFixed(0)}%`;
     }
 
     playBtn.addEventListener('click', () => {
